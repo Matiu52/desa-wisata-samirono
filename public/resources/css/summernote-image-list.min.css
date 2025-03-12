@@ -1,0 +1,41 @@
+.image-list-content {
+    max-height: 50vh;
+    overflow-y: scroll;
+    justify-items: center;
+}
+
+.image-list-item {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 50px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+.image-list-item:hover {
+    cursor: pointer;
+    border: 2px solid #337ab7;
+}
+
+.image-list-item img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: auto;
+    max-width: 90%;
+    max-height: 90%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease, z-index 0s ease;
+}
+
+.image-list-item p {
+    margin-top: 150px;
+    text-align: center;
+    font-size: 90%;
+}
+
+.image-list-item:hover p {
+    color: #337ab7;
+}
