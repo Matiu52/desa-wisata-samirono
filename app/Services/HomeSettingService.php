@@ -17,7 +17,8 @@ class HomeSettingService
             'userCount' => \App\Models\User::count(),
             'users' => \App\Models\User::select('name', 'email', 'role_id', 'created_at')->with('role:id,name')->get(),
             'orderCount' => \App\Models\Order::count(),
-            'setting' => HomeSetting::orderByRaw("FIELD(section, 'atas', 'tengah', 'bawah')")->paginate(5),
+            'setting' => HomeSetting::orderByRaw("FIELD(section, 'atas', 'tengah', 'bawah')")->get(),
+            'carousels' => \App\Models\Carousel::all(),
         ];
     }
 

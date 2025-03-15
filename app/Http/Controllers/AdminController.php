@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\HomeSetting;
+
 use App\Http\Requests\HomeSettingRequest;
-use App\Services\HomeSettingService;
+use App\Http\Requests\SearchHomeSetting\SearchSectionRequest;
+use App\Http\Requests\SearchHomeSetting\SearchUserRequest;
 use Illuminate\Http\Request;
+
+use App\Services\HomeSettingService;
+use App\Services\HomeSettings\SearchService;
 
 class AdminController extends Controller
 {
@@ -13,7 +18,7 @@ class AdminController extends Controller
     {
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $data = $this->service->getDashboardData();
         return view('admin.dashboard', $data);
@@ -54,4 +59,33 @@ class AdminController extends Controller
         $this->service->delete($homeSetting);
         return redirect()->route('dashboard')->with('success', 'Section berhasil dihapus.');
     }
+
+    public function searchSection(SearchSectionRequest $request, SearchService $service)
+    {
+        $query = $request->input('q');
+
+        if ($request->ajax()) {
+            $sections = $service->searchSections($query);
+            $html = view('components.admin.partials.section-body', ['setting' => $sections])->render();
+
+            return response()->json(['html' => $html]);
+        }
+
+        return redirect()->route('dashboard');
+    }
+
+    public function searchUser(SearchUserRequest $request, SearchService $service)
+    {
+        $query = $request->input('q');
+        if ($request->ajax()) {
+            $users = $service->searchUsers($query);
+            $html = view('components.admin.partials.user-body', ['users' => $users, 'userCount' => $users->count()])->render();
+
+            return response()->json(['html' => $html]);
+        }
+
+        return redirect()->route('dashboard');
+    }
+
+
 }

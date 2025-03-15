@@ -38,8 +38,6 @@
 
         <!-- Page Content -->
         <main>
-            {{-- Sidebar --}}
-            <x-sidebar></x-sidebar>
             {{ $slot }}
         </main>
         <x-footer-dashboard></x-footer-dashboard>

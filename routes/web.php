@@ -32,9 +32,12 @@ Route::middleware('auth')->group(function () {
     //Admin Role
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::get('dashboard', [Controllers\AdminController::class, 'index'])->name('dashboard');
-        Route::resource('home-settings', Controllers\AdminController::class)->except(['index', 'destroy', 'deleteImage']);
+        Route::resource('home-settings', Controllers\AdminController::class)->except(['index', 'destroy', 'deleteImage', 'searchSection', 'searchUser']);
         Route::delete('/home-settings/{homeSetting}/delete-image', [Controllers\AdminController::class, 'deleteImage'])->name('home-settings.delete-image');
         Route::delete('/home-settings/{homeSetting}', [Controllers\AdminController::class, 'destroy'])->name('home-settings.destroy');
+        Route::get('/dashboard/search-section', [Controllers\AdminController::class, 'searchSection'])->name('home-settings.search-section');
+        Route::get('/dashboard/search-user', [Controllers\AdminController::class, 'searchUser'])->name('home-settings.search-user');
+
 
         Route::resource('/posts', Controllers\PostController::class)->except(['edit', 'show', 'destroy', 'search']);
         Route::get('/posts/search', [Controllers\PostController::class, 'search'])->name('post.search');
