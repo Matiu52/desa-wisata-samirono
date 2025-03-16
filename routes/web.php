@@ -9,7 +9,7 @@ Route::get('/', [Controllers\HomeController::class, 'index'])->name('homepage');
 Route::get('/posts', [Controllers\FrontendPostController::class, 'index'])->name('frontend.posts');
 Route::get('/posts/{post:slug}', [Controllers\FrontendPostController::class, 'show'])->name('frontend.posts.show');
 Route::get('/post/search', [Controllers\FrontendPostController::class, 'search'])->name('frontend.posts.search');
-Route::get('/posts/author/{name}', [Controllers\UserController::class, 'show'])->name('authors.posts.show');
+Route::get('/posts/author/{name}', [Controllers\AuthorController::class, 'show'])->name('authors.posts.show');
 
 //Tour Package
 Route::get('/packages', [Controllers\PackageController::class, 'index'])->name('frontend.tour-packages');
@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard/search-section', [Controllers\AdminController::class, 'searchSection'])->name('home-settings.search-section');
         Route::get('/dashboard/search-user', [Controllers\AdminController::class, 'searchUser'])->name('home-settings.search-user');
 
+        Route::resource('user', Controllers\UserController::class);
 
         Route::resource('/posts', Controllers\PostController::class)->except(['edit', 'show', 'destroy', 'search']);
         Route::get('/posts/search', [Controllers\PostController::class, 'search'])->name('post.search');

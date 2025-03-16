@@ -72,7 +72,8 @@
 
                 {{-- Tombol Tambah User --}}
                 <x-slot name="action">
-                    <x-admin.link-button href="{{ route('home-settings.create') }}">Tambah User</x-admin.link-button>
+                    <x-admin.link-button href="{{ route('user.create') }}">Tambah
+                        User</x-admin.link-button>
                 </x-slot>
                 <x-admin.table>
                     <x-slot name="head">
@@ -81,6 +82,7 @@
                         <x-admin.th>Email</x-admin.th>
                         <x-admin.th>Mendaftar Pada</x-admin.th>
                         <x-admin.th>Role</x-admin.th>
+                        <x-admin.th>Aksi</x-admin.th>
                     </x-slot>
                     <x-slot name="body">
                         <tbody id="user-table-body">

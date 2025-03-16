@@ -15,7 +15,7 @@ class HomeSettingService
             'tourPackageCount' => \App\Models\TourPackage::count(),
             'commentCount' => \App\Models\Comment::count(),
             'userCount' => \App\Models\User::count(),
-            'users' => \App\Models\User::select('name', 'email', 'role_id', 'created_at')->with('role:id,name')->get(),
+            'users' => \App\Models\User::select('id', 'name', 'email', 'role_id', 'created_at')->with('role:id,name')->get(),
             'orderCount' => \App\Models\Order::count(),
             'setting' => HomeSetting::orderByRaw("FIELD(section, 'atas', 'tengah', 'bawah')")->get(),
             'carousels' => \App\Models\Carousel::all(),

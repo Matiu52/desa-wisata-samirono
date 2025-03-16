@@ -10,6 +10,9 @@
         <x-admin.td>{{ $user->email }}</x-admin.td>
         <x-admin.td>{{ $user->created_at->format('d M Y') }}</x-admin.td>
         <x-admin.td>{{ $user->role->name }}</x-admin.td>
+        <x-admin.td>
+            <x-admin.action-buttons edit="{{ route('user.edit', $user) }}" delete="{{ route('user.destroy', $user) }}" />
+        </x-admin.td>
     </x-admin.tr>
 @empty
     <x-admin.empty-row colspan="5" />

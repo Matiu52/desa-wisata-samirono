@@ -2,33 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use Log;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Services\UserService;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 
 class UserController extends Controller
 {
-    public function index()
+
+    protected $userService;
+
+    public function __construct(UserService $userService)
     {
-        return view('welcome');
+        $this->userService = $userService;
+    }
+    public function create()
+    {
+        return view('admin.user.create');
     }
 
-    private function extractFirstImage($content)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreUserRequest $request)
     {
-        preg_match('/<img.+src=[\'"](?P<src>.+?)[\'"].*>/i', $content, $image);
+        $this->userService->store($request->validated());
 
-        return $image['src'] ?? null;
-    }
-    public function show($name)
-    {
-        $name = urldecode($name);
-        $user = User::where('name', $name)->firstOrFail();
-        $posts = $user->posts()->latest()->paginate(12);
-        foreach ($posts as $post) {
-            $post->image = $this->extractFirstImage($post->content) ?? asset('images/default-image-post.png');
-        }
-
-        return view('frontend.posts.showByAuthor', compact('user', 'posts'));
+        return redirect()->route('dashboard')->with('success', 'User berhasil ditambahkan');
     }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(User $user)
+    {
+        return view('admin.user.edit', compact('user'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateUserRequest $request, User $user, UserService $userService)
+    {
+        $userService->update($user, $request->validated());
+
+        return redirect()->route('dashboard')->with('success', 'User berhasil diperbarui.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->route('dashboard')->with('success', 'User berhasil dihapus.');
+    }
 }

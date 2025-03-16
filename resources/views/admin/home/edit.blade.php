@@ -3,6 +3,9 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Edit Section
         </h2>
+        <x-admin.link-button href="{{ route('dashboard') }}">
+            Kembali ke Dashboard
+        </x-admin.link-button>
     </x-slot>
 
     <div class="py-12">

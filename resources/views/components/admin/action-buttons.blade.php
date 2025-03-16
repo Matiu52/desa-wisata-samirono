@@ -1,5 +1,5 @@
 @props(['edit', 'delete'])
-<div class="flex space-x-2">
+<div class="flex space-x-2 justify-center items-center">
     <a href="{{ $edit }}" class="text-blue-600 hover:underline">Edit</a>
     <form action="{{ $delete }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')">
         @csrf
