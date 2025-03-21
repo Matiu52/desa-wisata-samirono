@@ -2,8 +2,9 @@
 
 namespace App\Services\HomeSettings;
 
-use App\Models\HomeSetting;
 use App\Models\User;
+use App\Models\Gallery;
+use App\Models\HomeSetting;
 
 class SearchService
 {
@@ -26,4 +27,16 @@ class SearchService
                 ->orWhere('email', 'like', "%$query%");
         })->get();
     }
+
+    public function searchGalleries(string $query)
+    {
+        $query = trim($query);
+
+        return Gallery::when($query, function ($q) use ($query) {
+            $q->where('title', 'like', "%$query%")
+                ->orWhere('description', 'like', "%$query%");
+        })
+            ->get();
+    }
+
 }

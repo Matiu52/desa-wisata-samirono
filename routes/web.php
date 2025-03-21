@@ -37,6 +37,9 @@ Route::middleware('auth')->group(function () {
         Route::delete('/home-settings/{homeSetting}', [Controllers\AdminController::class, 'destroy'])->name('home-settings.destroy');
         Route::get('/dashboard/search-section', [Controllers\AdminController::class, 'searchSection'])->name('home-settings.search-section');
         Route::get('/dashboard/search-user', [Controllers\AdminController::class, 'searchUser'])->name('home-settings.search-user');
+        Route::get('/dashboard/search-gallery', [Controllers\AdminController::class, 'searchGallery'])
+            ->name('home-settings.search-gallery');
+
 
         Route::resource('user', Controllers\UserController::class);
 
@@ -59,12 +62,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/image-manager/upload', [Controllers\ImageManagerController::class, 'upload'])->name('image.manager.upload');
         Route::delete('/image-manager/delete', [Controllers\ImageManagerController::class, 'delete'])->name('image.manager.delete');
 
-        Route::get('/carousel', [Controllers\CarouselController::class, 'index'])->name('carousel.index');
-        Route::get('/carousel/create', [Controllers\CarouselController::class, 'create'])->name('carousel.create');
-        Route::post('/carousel', [Controllers\CarouselController::class, 'store'])->name('carousel.store');
-        Route::get('/carousel/{carousel}/edit', [Controllers\CarouselController::class, 'edit'])->name('carousel.edit');
-        Route::put('/carousel/{carousel}', [Controllers\CarouselController::class, 'update'])->name('carousel.update');
-        Route::delete('/carousel/{carousel}', [Controllers\CarouselController::class, 'destroy'])->name('carousel.destroy');
+        Route::resource('gallery', Controllers\GalleryController::class);
 
     });
     Route::get('/images/list', [Controllers\PostController::class, 'list'])->name('images.list');

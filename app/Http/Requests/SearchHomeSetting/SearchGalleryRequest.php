@@ -4,7 +4,7 @@ namespace App\Http\Requests\SearchHomeSetting;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchSectionRequest extends FormRequest
+class SearchGalleryRequest extends FormRequest
 {
     public function authorize(): bool
     {

@@ -18,7 +18,7 @@ class HomeSettingService
             'users' => \App\Models\User::select('id', 'name', 'email', 'role_id', 'created_at')->with('role:id,name')->get(),
             'orderCount' => \App\Models\Order::count(),
             'setting' => HomeSetting::orderByRaw("FIELD(section, 'atas', 'tengah', 'bawah')")->get(),
-            'carousels' => \App\Models\Carousel::all(),
+            'galleries' => \App\Models\Gallery::all(),
         ];
     }
 

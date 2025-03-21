@@ -1,15 +1,20 @@
 <x-user-layout>
-    <div class="my-8">
-        <div class="container mx-auto px-4 py-8">
-            <h1 class="text-4xl font-extrabold mb-8 text-center text-gray-800 tracking-wide">📰 Postingan</h1>
+    <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:px-8 space-y-12">
+        <x-admin.header>
+            📰 {{ __('Postingan Terbaru') }}
+        </x-admin.header>
 
-            <!-- Search Component -->
-            @include('frontend.posts.components.search')
+        {{-- Postingan Section --}}
+        <x-admin.section title="Daftar Postingan">
+            <x-admin.card>
+                <x-slot name="search">
+                    @include('frontend.posts.components.search')
+                </x-slot>
 
-            <!-- Post Section -->
-            <div class="mt-8" id="post-container">
-                @include('frontend.posts.components.posts')
-            </div>
-        </div>
+                <div id="post-container" class="mt-6">
+                    @include('frontend.posts.components.posts')
+                </div>
+            </x-admin.card>
+        </x-admin.section>
     </div>
 </x-user-layout>

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\HomeSetting;
 
-use App\Http\Requests\HomeSettingRequest;
-use App\Http\Requests\SearchHomeSetting\SearchSectionRequest;
-use App\Http\Requests\SearchHomeSetting\SearchUserRequest;
 use Illuminate\Http\Request;
-
 use App\Services\HomeSettingService;
+use App\Http\Requests\HomeSettingRequest;
 use App\Services\HomeSettings\SearchService;
+
+use App\Http\Requests\SearchHomeSetting\SearchUserRequest;
+use App\Http\Requests\SearchHomeSetting\SearchGalleryRequest;
+use App\Http\Requests\SearchHomeSetting\SearchSectionRequest;
 
 class AdminController extends Controller
 {
@@ -87,5 +88,21 @@ class AdminController extends Controller
         return redirect()->route('dashboard');
     }
 
+    public function searchGallery(SearchGalleryRequest $request, SearchService $service)
+    {
+        $query = $request->input('q');
+
+        if ($request->ajax()) {
+            $galleries = $service->searchGalleries($query);
+            $html = view('components.admin.partials.gallery-body', [
+                'galleries' => $galleries,
+                'galleryCount' => $galleries->count(),
+            ])->render();
+
+            return response()->json(['html' => $html]);
+        }
+
+        return redirect()->route('dashboard');
+    }
 
 }

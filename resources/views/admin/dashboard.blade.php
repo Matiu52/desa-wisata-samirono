@@ -3,7 +3,7 @@
         {{ __('Selamat datang di Dashboard Admin, ' . Auth::user()->name . '!') }}
     </x-admin.header>
 
-    <div class="py-12 px-4 sm:px-6 lg:px-8 space-y-16">
+    <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:px-8 space-y-16">
 
         {{-- Statistik Section --}}
         <x-admin.section title="Statistik">
@@ -45,7 +45,7 @@
                 {{-- Tabel --}}
                 <x-admin.table>
                     <x-slot name="head">
-                        <x-admin.th>Nama Section</x-admin.th>
+                        <x-admin.th>Posisi Section</x-admin.th>
                         <x-admin.th>Judul</x-admin.th>
                         <x-admin.th>Konten</x-admin.th>
                         <x-admin.th>Jumlah Gambar</x-admin.th>
@@ -96,25 +96,25 @@
             </x-admin.card>
         </x-admin.section>
 
-        {{-- Carousel Section --}}
-        <x-admin.section title="Pengaturan Carousel">
+        {{-- Gallery Kunjungan Section --}}
+        <x-admin.section title="Pengaturan Gallery Kunjungan">
             <x-admin.card>
+                {{--  Search --}}
+                <x-slot name="search">
+                    <input type="text" id="search_gallery" placeholder="Cari gallery..."
+                        class="px-4 py-2 border rounded-md w-full sm:w-64" />
+                </x-slot>
                 <x-slot name="action">
-                    <x-admin.link-button href="{{ route('carousel.create') }}">Buat Carousel Baru</x-admin.link-button>
+                    <x-admin.link-button href="{{ route('gallery.create') }}">Tambah Gambar Baru</x-admin.link-button>
                 </x-slot>
 
-                @if ($carousels->isEmpty())
-                    <x-admin.empty-message> Tidak ada gambar. </x-admin.empty-message>
-                @else
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        @foreach ($carousels as $carousel)
-                            <x-admin.carousel-card :image="asset('images/uploads/' . $carousel->image_path)" :title="$carousel->title" :description="$carousel->description"
-                                :editUrl="route('carousel.edit', $carousel->id)" :deleteUrl="route('carousel.destroy', $carousel->id)" />
-                        @endforeach
-                    </div>
-                @endif
+                <div id="gallery-body">
+                    <x-admin.partials.gallery-body :galleries="$galleries" />
+                </div>
+
             </x-admin.card>
         </x-admin.section>
+
 
     </div>
 </x-app-layout>
@@ -173,6 +173,33 @@
                 fetchUsers("{{ route('home-settings.search-user') }}");
             } else {
                 fetchUsers("{{ route('home-settings.search-user') }}", keyword);
+            }
+        });
+
+        function fetchGalleries(url, keyword = '') {
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: {
+                    q: keyword
+                },
+                success: function(data) {
+                    $('#gallery-body').html(data.html);
+                    const newUrl = url + (keyword ? '?q=' + keyword : '');
+                    window.history.pushState({}, '', newUrl);
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                }
+            });
+        }
+
+        $('#search_gallery').on('keyup', function() {
+            const keyword = $(this).val().toLowerCase();
+            if (keyword.length === 0) {
+                fetchGalleries("{{ route('home-settings.search-gallery') }}");
+            } else {
+                fetchGalleries("{{ route('home-settings.search-gallery') }}", keyword);
             }
         });
 
