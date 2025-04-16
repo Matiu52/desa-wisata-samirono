@@ -9,10 +9,10 @@
             <!-- Text Section -->
             <div class="text-center lg:w-1/2  lg:text-left">
                 <h1 class="text-4xl font-bold mb-6 lg:text-5xl">
-                    Selamat Datang di <span class="text-blue-500">Desa Wisata Samirono</span>
+                    Selamat Datang di <br><span class="text-blue-500">Desa Wisata Samirono</span>
                 </h1>
                 <p class="text-lg text-gray-600 mb-6">
-                    Desa Wisata Samirono adalah Desa Sentra Peternakan Sapi Perah Rakyat di Kecamatan Getasan, Kabupaten
+                    Desa Wisata Samirono adalah desa sentra peternakan sapi perah rakyat di Kecamatan Getasan, Kabupaten
                     Semarang. Menawarkan keindahan alam, budaya lokal, dan inovasi energi terbarukan.
                 </p>
                 <div class="flex flex-col mb-5 lg:flex-row lg:space-x-4 justify-center lg:justify-start">

@@ -3,11 +3,11 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class="mb-6 text-center">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Login</h1>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Masukkan email dan password Anda untuk masuk.</p>
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Login Admin</h1>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Silakan login untuk mengakses dashboard admin</p>
     </div>
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('admin.login') }}">
         @csrf
 
         <!-- Email Address -->

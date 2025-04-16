@@ -23,11 +23,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [Controllers\ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/posts/{post:slug}/comments', [Controllers\CommentController::class, 'store'])->name('comments.store');
+    Route::post('/comments/{comment}/reply', [Controllers\CommentController::class, 'reply'])->name('comments.reply');
+    Route::delete('/comments/{comment}', [Controllers\CommentController::class, 'destroy'])->name('comments.destroy');
 
     //User Role
-    Route::middleware('role:user')->group(function () {
-
-    });
+    Route::middleware('role:user')->group(function () {});
 
     //Admin Role
     Route::prefix('admin')->middleware('role:admin')->group(function () {
@@ -48,7 +49,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/posts/{post:slug}/edit', [Controllers\PostController::class, 'edit'])->name('posts.edit');
         Route::get('/posts/{post:slug}', [Controllers\PostController::class, 'show'])->name('posts.show');
         Route::delete('/posts/{post:slug}/delete', [Controllers\PostController::class, 'destroy'])->name('posts.destroy');
-        Route::post('/posts/{post:slug}/comments', [Controllers\CommentController::class, 'store'])->name('comments.store');
 
         Route::resource('/tour-packages', Controllers\TourPackageController::class)->except(['show', 'edit', 'destroy', 'search']);
         Route::get('/tour-packages/search', [Controllers\TourPackageController::class, 'search'])->name('tour-packages.search');
@@ -63,7 +63,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/image-manager/delete', [Controllers\ImageManagerController::class, 'delete'])->name('image.manager.delete');
 
         Route::resource('gallery', Controllers\GalleryController::class);
-
     });
     Route::get('/images/list', [Controllers\PostController::class, 'list'])->name('images.list');
 });

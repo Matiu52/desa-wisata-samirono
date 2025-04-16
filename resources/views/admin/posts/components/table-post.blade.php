@@ -5,6 +5,7 @@
         <x-admin.th>Dibuat Oleh</x-admin.th>
         <x-admin.th>Dibuat Pada</x-admin.th>
         <x-admin.th>Diupdate Pada</x-admin.th>
+        <x-admin.th>Jumlah Komentar</x-admin.th>
         <x-admin.th>Aksi</x-admin.th>
     </x-slot>
     <x-slot name="body">

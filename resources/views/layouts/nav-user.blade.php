@@ -67,6 +67,7 @@
                         @if (Route::has('register'))
                             <x-nav-link :href="route('register')">Daftar</x-nav-link>
                         @endif
+                        <x-nav-link :href="route('admin.login')">Admin</x-nav-link>
                     @endauth
                 @endif
             </div>
@@ -140,6 +141,7 @@
                         @if (Route::has('register'))
                             <x-nav-link :href="route('register')">Daftar</x-nav-link>
                         @endif
+                        <x-nav-link :href="route('admin.login')">Admin</x-nav-link>
                     @endauth
                 @endif
             </div>

@@ -11,6 +11,7 @@
         <x-admin.td> {{ $post->user->name }}</x-admin.td>
         <x-admin.td> {{ $post->created_at }}</x-admin.td>
         <x-admin.td> {{ $post->updated_at }}</x-admin.td>
+        <x-admin.td> {{ $post->comments->count() }} </x-admin.td>
         <x-admin.td>
             <div class="flex items-center justify-center space-x-2">
                 <x-admin.action-buttons edit="{{ route('posts.edit', $post->slug) }}"

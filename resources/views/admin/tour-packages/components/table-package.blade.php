@@ -36,45 +36,54 @@
         </tr>
     </thead>
     <tbody id="post-table">
-        @foreach ($tourPackages as $index => $tourPackage)
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class="px-2 py-4">
-                    {{ $startIndex + $index }}
-                </td>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ Str::limit($tourPackage->package_name, 25) }}
-                </th>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ Str::limit($tourPackage->description, 25) }}
-                </th>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Rp {{ number_format($tourPackage->price, 0, ',', '.') }}
-                </th>
-                <th scope="row"
-                    class="list-disc list-inside text-left px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    @foreach ($tourPackage->listItems as $item)
-                        <li>{{ $item->name }}</li>
-                    @endforeach
-                </th>
-                <td class="px-6 py-4">
-                    {{ $tourPackage->user->name }}
-                </td>
-                <td class="px-6 py-4">
-                    {{ $tourPackage->created_at }}
-                </td>
-                <td class="px-6 py-4">
-                    {{ $tourPackage->updated_at }}
-                </td>
-                <td class="px-6 py-4">
-                    <a href="{{ route('tour-packages.edit', $tourPackage->slug) }}"
-                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                    </a>|
-                    <a href="{{ route('tour-packages.show', $tourPackage->slug) }}"
-                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Lihat
-                    </a>
+        @if ($tourPackages->isEmpty())
+            <tr>
+                <td colspan="9" class="px-6 py-4 text-center text-gray-500">
+                    Tidak ada data.
                 </td>
             </tr>
-        @endforeach
+        @else
+            @foreach ($tourPackages as $index => $tourPackage)
+                <tr
+                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-2 py-4">
+                        {{ $startIndex + $index }}
+                    </td>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ Str::limit($tourPackage->package_name, 25) }}
+                    </th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ Str::limit($tourPackage->description, 25) }}
+                    </th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Rp {{ number_format($tourPackage->price, 0, ',', '.') }}
+                    </th>
+                    <th scope="row"
+                        class="list-disc list-inside text-left px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        @foreach ($tourPackage->listItems as $item)
+                            <li>{{ $item->name }}</li>
+                        @endforeach
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ $tourPackage->user->name }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $tourPackage->created_at }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $tourPackage->updated_at }}
+                    </td>
+                    <td class="px-6 py-4">
+                        <a href="{{ route('tour-packages.edit', $tourPackage->slug) }}"
+                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
+                        </a>|
+                        <a href="{{ route('tour-packages.show', $tourPackage->slug) }}"
+                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Lihat
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
+        @endif
     </tbody>
 </table>
 <div class="m-3">

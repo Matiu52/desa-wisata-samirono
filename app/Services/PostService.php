@@ -52,7 +52,7 @@ class PostService
     public function index(Request $request)
     {
         $keyword = strtolower($request->get('keyword', ''));
-        $posts = Post::query();
+        $posts = Post::with('comments');
 
         if ($keyword) {
             $posts = $posts->where('title', 'like', "%$keyword%")
@@ -78,7 +78,10 @@ class PostService
 
     public function show(Post $post)
     {
-        $post = Post::where('slug', $post->slug)->firstOrFail();
+        $post = Post::with(['comments.user'])
+            ->where('slug', $post->slug)
+            ->firstOrFail();
+
         return view('admin.posts.show', [
             'post' => $post,
             'userName' => $post->user->name,
