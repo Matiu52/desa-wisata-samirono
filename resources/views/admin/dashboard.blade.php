@@ -61,41 +61,6 @@
             </x-admin.card>
         </x-admin.section>
 
-        {{-- User Setting --}}
-        <x-admin.section title="Pengaturan User">
-            <x-admin.card>
-                {{-- Search --}}
-                <x-slot name="search">
-                    <input type="text" id="search_user" placeholder="Cari user..."
-                        class="px-4 py-2 border rounded-md w-full sm:w-64" />
-                </x-slot>
-
-                {{-- Tombol Tambah User --}}
-                <x-slot name="action">
-                    <x-admin.link-button href="{{ route('user.create') }}">Tambah
-                        User</x-admin.link-button>
-                </x-slot>
-                <x-admin.table>
-                    <x-slot name="head">
-                        <x-admin.th>Nomor</x-admin.th>
-                        <x-admin.th>Nama</x-admin.th>
-                        <x-admin.th>Email</x-admin.th>
-                        <x-admin.th>Mendaftar Pada</x-admin.th>
-                        <x-admin.th>Role</x-admin.th>
-                        <x-admin.th>Aksi</x-admin.th>
-                    </x-slot>
-                    <x-slot name="body">
-                        <tbody id="user-table-body">
-                            @include('components.admin.partials.user-body', [
-                                'users' => $users,
-                                'userCount' => $userCount,
-                            ])
-                        </tbody>
-                    </x-slot>
-                </x-admin.table>
-            </x-admin.card>
-        </x-admin.section>
-
         {{-- Gallery Kunjungan Section --}}
         <x-admin.section title="Pengaturan Gallery Kunjungan">
             <x-admin.card>

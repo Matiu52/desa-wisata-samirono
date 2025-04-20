@@ -2,7 +2,7 @@
     <x-admin.header>
         {{ __('Selamat datang di Paket Wisata, ' . Auth::user()->name . '!') }}
     </x-admin.header>
-    <div class="py-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div class="py-6 bg-gray-50 dark:bg-gray-900 h-full">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             @if (session('success'))
                 <div class="px-2">

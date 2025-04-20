@@ -11,6 +11,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -25,7 +26,6 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @include('layouts.navigation')
 
         <!-- Page Heading -->
         @isset($header)
@@ -37,11 +37,22 @@
         @endisset
 
         <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+        <div class="flex h-screen bg-gray-100 dark:bg-gray-900">
+
+            <!-- Sidebar -->
+            @include('layouts.sidebar')
+
+            <!-- Main Content -->
+            <main class="flex-1 ml-64">
+                <div class="p-6">
+                    {{ $slot }}
+                </div>
+            </main>
+        </div>
+
         <x-footer-dashboard></x-footer-dashboard>
     </div>
+    @include('layouts.sidebar-script')
 </body>
 
 </html>

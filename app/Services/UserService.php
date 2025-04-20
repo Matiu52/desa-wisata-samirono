@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
+    public function getUsersData()
+    {
+        return [
+            'userCount' => User::count(),
+            'users' => User::select('id', 'name', 'email', 'role_id', 'created_at')->with('role:id,name')->get(),
+        ];
+    }
     public function store(array $data): User
     {
         return User::create([

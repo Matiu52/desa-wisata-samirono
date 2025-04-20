@@ -9,15 +9,12 @@ use App\Services\HomeSettingService;
 use App\Http\Requests\HomeSettingRequest;
 use App\Services\HomeSettings\SearchService;
 
-use App\Http\Requests\SearchHomeSetting\SearchUserRequest;
 use App\Http\Requests\SearchHomeSetting\SearchGalleryRequest;
 use App\Http\Requests\SearchHomeSetting\SearchSectionRequest;
 
 class AdminController extends Controller
 {
-    public function __construct(private HomeSettingService $service)
-    {
-    }
+    public function __construct(private HomeSettingService $service) {}
 
     public function index(Request $request)
     {
@@ -75,19 +72,6 @@ class AdminController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function searchUser(SearchUserRequest $request, SearchService $service)
-    {
-        $query = $request->input('q');
-        if ($request->ajax()) {
-            $users = $service->searchUsers($query);
-            $html = view('components.admin.partials.user-body', ['users' => $users, 'userCount' => $users->count()])->render();
-
-            return response()->json(['html' => $html]);
-        }
-
-        return redirect()->route('dashboard');
-    }
-
     public function searchGallery(SearchGalleryRequest $request, SearchService $service)
     {
         $query = $request->input('q');
@@ -104,5 +88,4 @@ class AdminController extends Controller
 
         return redirect()->route('dashboard');
     }
-
 }

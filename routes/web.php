@@ -33,16 +33,19 @@ Route::middleware('auth')->group(function () {
     //Admin Role
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::get('dashboard', [Controllers\AdminController::class, 'index'])->name('dashboard');
-        Route::resource('home-settings', Controllers\AdminController::class)->except(['index', 'destroy', 'deleteImage', 'searchSection', 'searchUser']);
+        Route::resource('home-settings', Controllers\AdminController::class)->except(['index', 'destroy', 'deleteImage', 'searchSection']);
         Route::delete('/home-settings/{homeSetting}/delete-image', [Controllers\AdminController::class, 'deleteImage'])->name('home-settings.delete-image');
         Route::delete('/home-settings/{homeSetting}', [Controllers\AdminController::class, 'destroy'])->name('home-settings.destroy');
         Route::get('/dashboard/search-section', [Controllers\AdminController::class, 'searchSection'])->name('home-settings.search-section');
-        Route::get('/dashboard/search-user', [Controllers\AdminController::class, 'searchUser'])->name('home-settings.search-user');
-        Route::get('/dashboard/search-gallery', [Controllers\AdminController::class, 'searchGallery'])
+
+
+        Route::get('/user/search-gallery', [Controllers\AdminController::class, 'searchGallery'])
             ->name('home-settings.search-gallery');
 
 
-        Route::resource('user', Controllers\UserController::class);
+        Route::get('/user/search-user', [Controllers\UserController::class, 'searchUser'])->name('home-settings.search-user');
+        Route::get('user', [Controllers\UserController::class, 'index'])->name('users.index');
+        Route::resource('user', Controllers\UserController::class)->except(['index', 'searchUser']);
 
         Route::resource('/posts', Controllers\PostController::class)->except(['edit', 'show', 'destroy', 'search']);
         Route::get('/posts/search', [Controllers\PostController::class, 'search'])->name('post.search');

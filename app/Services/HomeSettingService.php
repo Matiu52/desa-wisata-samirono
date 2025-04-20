@@ -15,7 +15,6 @@ class HomeSettingService
             'tourPackageCount' => \App\Models\TourPackage::count(),
             'commentCount' => \App\Models\Comment::count(),
             'userCount' => \App\Models\User::count(),
-            'users' => \App\Models\User::select('id', 'name', 'email', 'role_id', 'created_at')->with('role:id,name')->get(),
             'orderCount' => \App\Models\Order::count(),
             'setting' => HomeSetting::orderByRaw("FIELD(section, 'atas', 'tengah', 'bawah')")->get(),
             'galleries' => \App\Models\Gallery::all(),
@@ -24,11 +23,15 @@ class HomeSettingService
 
     public function create(array $data, Request $request): HomeSetting
     {
+        // Tangani upload gambar
+        $images = $this->handleImages($request);
+
+        // Buat data baru di database
         return HomeSetting::create([
             'section' => $data['section'],
             'title' => $data['title'],
             'content' => $data['content'],
-            'images' => $this->handleImages($request),
+            'images' => implode(',', $images), // Gabungkan array gambar menjadi string
         ]);
     }
 
@@ -84,5 +87,4 @@ class HomeSettingService
 
         return $imagePathList;
     }
-
 }

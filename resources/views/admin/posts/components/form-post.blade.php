@@ -22,9 +22,3 @@
     <input type="text" id="tags" name="tags" value="{{ old('tags', $post->tags ?? '') }}"
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
 </div>
-<div class="flex items-center justify-between">
-    <button type="submit"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        {{ $btnText ?? 'Create' }}
-    </button>
-</div>

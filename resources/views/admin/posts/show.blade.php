@@ -1,15 +1,18 @@
 <x-app-layout>
     <x-admin.header>
-        {{ __('Detail Postingan: ' . $post->title) }}
+        <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Detail Postingan: ' . $post->title) }}
+            </h2>
+        </div>
     </x-admin.header>
 
     <div class="py-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-
             {{-- Info Post --}}
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-6">
-                <h2 class="text-2xl font-bold mb-4">{{ $post->title }}</h2>
+                <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">{{ $post->title }}</h2>
 
                 <div class="text-sm text-gray-600 dark:text-gray-300 mb-3">
                     <span class="font-semibold">Oleh:</span> <span class="text-blue-600">{{ $post->user->name }}</span>
@@ -34,37 +37,38 @@
 
             {{-- Konten Post --}}
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-6">
-                <h3 class="text-xl font-semibold mb-4">Isi Konten</h3>
+                <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Isi Konten</h3>
                 <div class="prose dark:prose-invert max-w-none">
                     {!! $post->content !!}
                 </div>
             </div>
 
             {{-- Aksi --}}
-            <div class="flex justify-center gap-3 mb-10">
+            <div class="flex justify-center gap-4 mb-10">
                 <a href="{{ route('posts.index') }}"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Kembali ke Daftar Post
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow">
+                    <i class="fas fa-arrow-left mr-2"></i> Kembali ke Daftar Post
                 </a>
 
                 <a href="{{ route('posts.edit', $post->slug) }}"
-                    class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
-                    Edit
+                    class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded shadow">
+                    <i class="fas fa-edit mr-2"></i> Edit
                 </a>
 
                 <form action="{{ route('posts.destroy', $post->slug) }}" method="POST"
                     onsubmit="return confirm('Yakin ingin menghapus post ini?')" class="inline-block">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                        Hapus
+                    <button type="submit"
+                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow">
+                        <i class="fas fa-trash mr-2"></i> Hapus
                     </button>
                 </form>
             </div>
 
             {{-- Komentar --}}
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <h3 class="text-lg font-semibold mb-4">Komentar</h3>
+                <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Komentar</h3>
 
                 @forelse ($post->comments as $comment)
                     <div class="mb-4 p-4 border rounded bg-gray-50 dark:bg-gray-900">
