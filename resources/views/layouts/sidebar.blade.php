@@ -33,10 +33,10 @@
                 </x-nav-link>
             </li>
             <li>
-                {{-- <x-nav-link :href="route('gallery.index')" :active="request()->routeIs('gallery.index')" class="text-white"> --}}
-                <i class="fas fa-images mr-2"></i>
-                {{ __('Gallery') }}
-                {{-- </x-nav-link> --}}
+                <x-nav-link :href="route('gallery.index')" :active="request()->routeIs('gallery.index')" class="text-white">
+                    <i class="fas fa-images mr-2"></i>
+                    {{ __('Gallery') }}
+                </x-nav-link>
             </li>
             <li>
                 {{-- <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')" class="text-white"> --}}

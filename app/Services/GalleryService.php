@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Storage;
 
 class GalleryService
 {
+    public function getGalleriesData(): array
+    {
+        return [
+            'galleries' => Gallery::select('id', 'title', 'description', 'created_at')
+                ->with('images:id,gallery_id,image_path') // Memuat relasi gambar
+                ->get(),
+        ];
+    }
     public function storeWithImages(array $data): Gallery
     {
         $gallery = Gallery::create([
@@ -76,6 +84,4 @@ class GalleryService
 
         $gallery->delete();
     }
-
-
 }

@@ -61,26 +61,6 @@
             </x-admin.card>
         </x-admin.section>
 
-        {{-- Gallery Kunjungan Section --}}
-        <x-admin.section title="Pengaturan Gallery Kunjungan">
-            <x-admin.card>
-                {{--  Search --}}
-                <x-slot name="search">
-                    <input type="text" id="search_gallery" placeholder="Cari gallery..."
-                        class="px-4 py-2 border rounded-md w-full sm:w-64" />
-                </x-slot>
-                <x-slot name="action">
-                    <x-admin.link-button href="{{ route('gallery.create') }}">Tambah Gambar Baru</x-admin.link-button>
-                </x-slot>
-
-                <div id="gallery-body">
-                    <x-admin.partials.gallery-body :galleries="$galleries" />
-                </div>
-
-            </x-admin.card>
-        </x-admin.section>
-
-
     </div>
 </x-app-layout>
 
@@ -113,60 +93,5 @@
                 fetchSection("{{ route('home-settings.search-section') }}", keyword);
             }
         });
-
-        function fetchUsers(url, keyword = '') {
-            $.ajax({
-                url: url,
-                type: "GET",
-                data: {
-                    q: keyword
-                },
-                success: function(data) {
-                    $('#user-table-body').html(data.html);
-                    const newUrl = url + (keyword ? '?q=' + keyword : '');
-                    window.history.pushState({}, '', newUrl);
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX Error:", error);
-                }
-            });
-        }
-
-        $('#search_user').on('keyup', function() {
-            const keyword = $(this).val().toLowerCase();
-            if (keyword.length === 0) {
-                fetchUsers("{{ route('home-settings.search-user') }}");
-            } else {
-                fetchUsers("{{ route('home-settings.search-user') }}", keyword);
-            }
-        });
-
-        function fetchGalleries(url, keyword = '') {
-            $.ajax({
-                url: url,
-                type: "GET",
-                data: {
-                    q: keyword
-                },
-                success: function(data) {
-                    $('#gallery-body').html(data.html);
-                    const newUrl = url + (keyword ? '?q=' + keyword : '');
-                    window.history.pushState({}, '', newUrl);
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX Error:", error);
-                }
-            });
-        }
-
-        $('#search_gallery').on('keyup', function() {
-            const keyword = $(this).val().toLowerCase();
-            if (keyword.length === 0) {
-                fetchGalleries("{{ route('home-settings.search-gallery') }}");
-            } else {
-                fetchGalleries("{{ route('home-settings.search-gallery') }}", keyword);
-            }
-        });
-
     });
 </script>

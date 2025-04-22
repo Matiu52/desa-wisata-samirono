@@ -10,14 +10,12 @@ use App\Services\GalleryService;
 
 class GalleryController extends Controller
 {
-    public function __construct(protected GalleryService $service)
-    {
-    }
+    public function __construct(protected GalleryService $service) {}
 
     public function index()
     {
-        // $galleries = Gallery::latest()->get();
-        // return view('dashboard', compact('galleries'));
+        $data = $this->service->getGalleriesData();
+        return view('admin.gallery.index', $data);
     }
 
     public function create()
@@ -28,7 +26,7 @@ class GalleryController extends Controller
     public function store(StoreGalleryWithImagesRequest $request)
     {
         $this->service->storeWithImages($request->validated());
-        return redirect()->route('dashboard')->with('success', 'Gallery berhasil dibuat.');
+        return redirect()->route('gallery.index')->with('success', 'Gallery berhasil dibuat.');
     }
 
     public function edit(Gallery $gallery)
@@ -51,7 +49,7 @@ class GalleryController extends Controller
             $deleteImageIds
         );
 
-        return redirect()->route('dashboard')
+        return redirect()->route('gallery.index')
             ->with('success', 'Galeri berhasil diperbarui!');
     }
 
@@ -60,7 +58,6 @@ class GalleryController extends Controller
     {
         $service->deleteGallery($gallery);
 
-        return redirect()->route('dashboard')->with('success', 'Galeri berhasil dihapus.');
+        return redirect()->route('gallery.index')->with('success', 'Galeri berhasil dihapus.');
     }
-
 }
