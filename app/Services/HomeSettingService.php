@@ -18,6 +18,7 @@ class HomeSettingService
             'orderCount' => \App\Models\Order::count(),
             'setting' => HomeSetting::orderByRaw("FIELD(section, 'atas', 'tengah', 'bawah')")->get(),
             'galleries' => \App\Models\Gallery::all(),
+            'backgroundImage' => \App\Models\BackgroundSetting::first(),
         ];
     }
 

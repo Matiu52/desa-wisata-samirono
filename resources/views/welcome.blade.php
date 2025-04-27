@@ -1,27 +1,33 @@
 <x-user-layout>
-    <section class="bg-white p-2">
-        <div class="container mx-auto px-6 lg:flex lg:items-center lg:space-x-10">
-            <!-- Image Section -->
-            <div class="lg:w-1/2 mt-0 lg:mt-0">
+    <section class="relative bg-cover bg-center bg-no-repeat p-8 h-[40rem]"
+        style="background-image: url('{{ $backgroundImage->image_path }}');">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+        <!-- Konten Utama -->
+        <div class="relative z-10 container mx-auto px-6 lg:flex lg:items-center lg:space-x-10 h-full">
+            <!-- Gambar -->
+            <div class="lg:w-1/2 mt-0 lg:mt-0 flex items-center justify-center">
                 <img src="{{ asset('images/desa-wisata-samirono.png') }}" alt="Desa Wisata Samirono"
                     class="w-full max-w-24 mx-auto lg:max-w-lg lg:mx-2">
             </div>
-            <!-- Text Section -->
-            <div class="text-center lg:w-1/2  lg:text-left">
-                <h1 class="text-4xl font-bold mb-6 lg:text-5xl">
-                    Selamat Datang di <br><span class="text-blue-500">Desa Wisata Samirono</span>
+
+            <!-- Teks -->
+            <div class="text-white text-center lg:text-left lg:w-1/2">
+                <h1 class="text-4xl font-bold mb-6 lg:text-5xl drop-shadow-md">
+                    Selamat Datang di <br><span class="text-blue-300">Desa Wisata Samirono</span>
                 </h1>
-                <p class="text-lg text-gray-600 mb-6">
+                <p class="text-lg text-white/90 mb-6 drop-shadow">
                     Desa Wisata Samirono adalah desa sentra peternakan sapi perah rakyat di Kecamatan Getasan, Kabupaten
                     Semarang. Menawarkan keindahan alam, budaya lokal, dan inovasi energi terbarukan.
                 </p>
                 <div class="flex flex-col mb-5 lg:flex-row lg:space-x-4 justify-center lg:justify-start">
                     <a href="{{ route('frontend.posts') }}"
-                        class="px-6 py-3 bg-blue-500 text-white rounded-lg font-medium shadow-md hover:bg-blue-600">
+                        class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium shadow-md hover:bg-blue-700 transition">
                         Jelajahi Sekarang
                     </a>
                     <a href="{{ route('frontend.tour-packages') }}"
-                        class="mt-3 lg:mt-0 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-100">
+                        class="mt-3 lg:mt-0 px-6 py-3 border border-white text-white rounded-lg font-medium hover:bg-white hover:text-blue-700 transition">
                         Pesan Paket Sekarang!
                     </a>
                 </div>

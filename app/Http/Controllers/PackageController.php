@@ -49,7 +49,7 @@ class PackageController extends Controller
             'package_id' => $validatedData['package_id'],
             'notes' => $validatedData['notes'] ?? null,
         ]);
-        return redirect()->route('frontend.tour-packages')->with('success', 'Pesanan Anda berhasil dikirim!');
+        return redirect()->route('frontend.tour-packages')->with('success', 'Pesanan berhasil dibuat! Kami akan menghubungi Anda segera.');
     }
 
     public function search(Request $request)

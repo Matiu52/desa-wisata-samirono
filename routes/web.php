@@ -14,9 +14,9 @@ Route::get('/posts/author/{name}', [Controllers\AuthorController::class, 'show']
 //Tour Package
 Route::get('/packages', [Controllers\PackageController::class, 'index'])->name('frontend.tour-packages');
 Route::get('/package/search', [Controllers\PackageController::class, 'search'])->name('frontend.tour-packages.search');
-//Order Package
+
+//Order
 Route::get('/packages/order/{slug}', [Controllers\PackageController::class, 'showForm'])->name('order.form');
-Route::post('/packages/order', [Controllers\PackageController::class, 'submitOrder'])->name('order.submit');
 
 //Authenticate
 Route::middleware('auth')->group(function () {
@@ -27,8 +27,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/comments/{comment}/reply', [Controllers\CommentController::class, 'reply'])->name('comments.reply');
     Route::delete('/comments/{comment}', [Controllers\CommentController::class, 'destroy'])->name('comments.destroy');
 
+    Route::get('/notifications/orders', [Controllers\NotificationController::class, 'getUserOrders'])->name('notifications.orders');
+
     //User Role
-    Route::middleware('role:user')->group(function () {});
+    Route::middleware('role:user')->group(function () {
+        //Order Package
+        Route::post('/packages/order', [Controllers\PackageController::class, 'submitOrder'])->name('order.submit');
+    });
 
     //Admin Role
     Route::prefix('admin')->middleware('role:admin')->group(function () {
@@ -38,6 +43,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/home-settings/{homeSetting}', [Controllers\AdminController::class, 'destroy'])->name('home-settings.destroy');
         Route::get('/dashboard/search-section', [Controllers\AdminController::class, 'searchSection'])->name('home-settings.search-section');
 
+        Route::put('/background', [Controllers\BackgroundController::class, 'update'])->name('background.update');
+        Route::delete('/background', [Controllers\BackgroundController::class, 'removeImage'])->name('background.remove-image');
 
         Route::get('/user/search-gallery', [Controllers\AdminController::class, 'searchGallery'])
             ->name('home-settings.search-gallery');

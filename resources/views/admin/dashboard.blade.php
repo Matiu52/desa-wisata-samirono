@@ -26,6 +26,53 @@
             </div>
         @endif
 
+        {{-- Background Image Settings Section --}}
+        <x-admin.section title="Ubah Background">
+            <x-admin.card>
+                <form action="{{ route('background.update') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="space-y-4">
+                        <!-- Current Background Preview -->
+
+                        @if ($backgroundImage)
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Background Saat Ini</label>
+                                <div class="relative">
+                                    <img src="{{ asset($backgroundImage->image_path) }}" alt="Current Background"
+                                        class="h-32 w-full object-cover rounded-lg shadow">
+                                    <button type="button" onclick="removeBackgroundImage()"
+                                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600">×</button>
+                                </div>
+                            </div>
+                        @else
+                            <div
+                                class="bg-gray-100 h-32 w-full rounded-lg flex items-center justify-center text-gray-500">
+                                Tidak ada background yang ditetapkan
+                            </div>
+                        @endif
+
+                        <!-- Image Upload -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Pilih Gambar Baru</label>
+                            <input type="file" name="background_image" accept="image/*"
+                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                required>
+                            <p class="mt-1 text-sm text-gray-500">Format: JPG, PNG (Maksimal 2MB)</p>
+                        </div>
+
+                        <div class="pt-4">
+                            <button type="submit"
+                                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                Simpan Background
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </x-admin.card>
+        </x-admin.section>
+
         {{-- Section Setting --}}
         <x-admin.section title="Pengaturan Section">
             <x-admin.card>
@@ -94,4 +141,36 @@
             }
         });
     });
+
+    function removeBackgroundImage() {
+        if (confirm('Apakah Anda yakin ingin menghapus gambar background saat ini?')) {
+            $.ajax({
+                url: "{{ route('background.remove-image') }}",
+                type: "DELETE",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Show success message
+                        alert(response.message);
+                        // Reload the page to reflect changes
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Parse the response if available
+                    let response = xhr.responseJSON;
+                    if (response && response.message) {
+                        alert('Error: ' + response.message);
+                    } else {
+                        alert('Terjadi kesalahan saat menghapus background. Silakan coba lagi.');
+                    }
+                    console.error("Error removing background image:", error);
+                }
+            });
+        }
+    }
 </script>

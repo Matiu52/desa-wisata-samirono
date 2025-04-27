@@ -12,8 +12,9 @@ class HomeController extends Controller
         $homeAtas = Models\HomeSetting::where('section', 'atas')->get();
         $homeTengah = Models\HomeSetting::where('section', 'tengah')->get();
         $homeBawah = Models\HomeSetting::where('section', 'bawah')->get();
-
+        $backgroundImage = Models\BackgroundSetting::first();
         $carousels = Models\Carousel::all();
-        return view('welcome', compact('carousels', 'homeAtas', 'homeTengah', 'homeBawah'));
+
+        return view('welcome', compact('carousels', 'homeAtas', 'homeTengah', 'homeBawah', 'backgroundImage'));
     }
 }
