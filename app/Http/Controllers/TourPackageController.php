@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TourPackage;
+use App\Models\TourPackageImage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -50,6 +51,7 @@ class TourPackageController extends Controller
             'duration' => 'required',
             'price' => 'required|numeric',
             'description' => 'nullable',
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'listItems' => 'array',
             'listItems.*' => 'string',
         ]);
@@ -63,6 +65,16 @@ class TourPackageController extends Controller
             'slug' => $uniqueSlug,
             'user_id' => Auth::id(),
         ]);
+        // Simpan Gambar
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('tour_packages', 'public');
+                TourPackageImage::create([
+                    'tour_package_id' => $tourPackage->id,
+                    'image_path' => $path,
+                ]);
+            }
+        }
         foreach ($request->listItems as $item) {
             $tourPackage->listItems()->create(['name' => $item]);
         }

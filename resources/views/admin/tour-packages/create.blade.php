@@ -16,7 +16,7 @@
             <div class="mx-auto max-w-4xl sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
                     <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">Buat Paket Wisata Baru</h1>
-                    <form action="{{ route('tour-packages.store') }}" method="POST">
+                    <form action="{{ route('tour-packages.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @include('admin.tour-packages.components.form-package')
 

@@ -39,6 +39,7 @@
                     @csrf
 
                     <input type="hidden" name="package_id" value="{{ $selectedPackage->id }}" />
+                    <input type="hidden" id="price_per_person" value="{{ $selectedPackage->price }}" />
 
                     <!-- Nama -->
                     <div>
@@ -46,6 +47,14 @@
                         <input type="text" id="name" name="name" required
                             class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Masukkan nama lengkap Anda" />
+                    </div>
+
+                    <!-- Alamat -->
+                    <div>
+                        <label for="address" class="block text-lg font-semibold text-gray-700 mb-2">Alamat Lengkap</label>
+                        <textarea id="address" name="address" required rows="3"
+                            class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Masukkan alamat lengkap Anda"></textarea>
                     </div>
 
                     <!-- Email -->
@@ -65,6 +74,24 @@
                             placeholder="Masukkan nomor telepon Anda" />
                     </div>
 
+                    <!-- Jumlah Orang -->
+                    <div>
+                        <label for="people_count" class="block text-lg font-semibold text-gray-700 mb-2">Jumlah
+                            Orang</label>
+                        <input type="number" id="people_count" name="people_count" min="1" required
+                            class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Masukkan jumlah orang" onchange="calculateTotal()" />
+                    </div>
+
+                    <!-- Total Harga -->
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <label class="block text-lg font-semibold text-gray-700 mb-2">Total Harga</label>
+                        <div class="text-2xl font-bold text-blue-800" id="total_price">
+                            Rp 0
+                        </div>
+                        <input type="hidden" id="total_price_input" name="total_price" value="0" />
+                    </div>
+
                     <!-- Catatan Tambahan -->
                     <div>
                         <label for="notes" class="block text-lg font-semibold text-gray-700 mb-2">Catatan
@@ -82,11 +109,27 @@
                         </button>
                     </div>
                 </form>
+
+                <script>
+                    function calculateTotal() {
+                        const pricePerPerson = document.getElementById('price_per_person').value;
+                        const peopleCount = document.getElementById('people_count').value;
+                        const totalPrice = pricePerPerson * peopleCount;
+
+                        document.getElementById('total_price').textContent = 'Rp ' + formatNumber(totalPrice);
+                        document.getElementById('total_price_input').value = totalPrice;
+                    }
+
+                    function formatNumber(num) {
+                        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+                    }
+                </script>
             @else
                 <div class="text-center">
                     <h2 class="text-2xl font-bold text-gray-800 mb-4">Silakan Login untuk Memesan</h2>
-                    <a href="{{ route('login') }}"
-                        class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-all duration-300 font-semibold shadow-lg">
+                    <a href="{{ route('login') }}
+                        class="bg-blue-500 hover:bg-blue-600 text-white
+                        px-6 py-3 rounded-lg transition-all duration-300 font-semibold shadow-lg">
                         Login
                     </a>
                 </div>

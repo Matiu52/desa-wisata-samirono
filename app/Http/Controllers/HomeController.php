@@ -13,7 +13,7 @@ class HomeController extends Controller
         $homeTengah = Models\HomeSetting::where('section', 'tengah')->get();
         $homeBawah = Models\HomeSetting::where('section', 'bawah')->get();
         $backgroundImage = Models\BackgroundSetting::first();
-        $carousels = Models\Carousel::all();
+        $carousels = Models\Gallery::with('images')->get();
 
         return view('welcome', compact('carousels', 'homeAtas', 'homeTengah', 'homeBawah', 'backgroundImage'));
     }

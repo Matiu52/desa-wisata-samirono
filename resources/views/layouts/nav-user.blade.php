@@ -25,7 +25,7 @@
                         <x-nav-link :href="route('frontend.tour-packages')" :active="request()->routeIs('frontend.tour-packages')">
                             <i class="fas fa-suitcase mr-2"></i> Paket Wisata
                         </x-nav-link>
-                        <x-nav-link href="#" :active="request()->routeIs('contact')">
+                        <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">
                             <i class="fas fa-envelope mr-2"></i> Kontak
                         </x-nav-link>
                         <x-nav-link href="#" :active="request()->routeIs('about')">

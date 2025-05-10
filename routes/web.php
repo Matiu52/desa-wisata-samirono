@@ -18,6 +18,12 @@ Route::get('/package/search', [Controllers\PackageController::class, 'search'])-
 //Order
 Route::get('/packages/order/{slug}', [Controllers\PackageController::class, 'showForm'])->name('order.form');
 
+//Gallery Detail
+Route::get('/gallery/{id}', [Controllers\GalleryController::class, 'show'])->name('gallery.detail');
+
+//Contact
+Route::resource('contact', Controllers\ContactController::class);
+
 //Authenticate
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [Controllers\ProfileController::class, 'edit'])->name('profile.edit');
@@ -26,8 +32,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/posts/{post:slug}/comments', [Controllers\CommentController::class, 'store'])->name('comments.store');
     Route::post('/comments/{comment}/reply', [Controllers\CommentController::class, 'reply'])->name('comments.reply');
     Route::delete('/comments/{comment}', [Controllers\CommentController::class, 'destroy'])->name('comments.destroy');
-
-    Route::get('/notifications/orders', [Controllers\NotificationController::class, 'getUserOrders'])->name('notifications.orders');
 
     //User Role
     Route::middleware('role:user')->group(function () {
@@ -66,13 +70,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/tour-packages/{tourPackage:slug}', [Controllers\TourPackageController::class, 'show'])->name('tour-packages.show');
         Route::delete('/tour-packages/{tourPackage:slug}/delete', [Controllers\TourPackageController::class, 'destroy'])->name('tour-packages.destroy');
 
-        Route::resource('/orders', Controllers\OrderController::class);
+        Route::resource('orders', Controllers\OrderController::class);
 
         Route::get('/image-manager', [Controllers\ImageManagerController::class, 'index'])->name('image.manager');
         Route::post('/image-manager/upload', [Controllers\ImageManagerController::class, 'upload'])->name('image.manager.upload');
         Route::delete('/image-manager/delete', [Controllers\ImageManagerController::class, 'delete'])->name('image.manager.delete');
 
         Route::resource('gallery', Controllers\GalleryController::class);
+
+        Route::resource('contact-messages', Controllers\ContactMessageController::class)
+            ->only(['index', 'show', 'destroy']);
+        Route::get('/admin/contact-messages/{message}', [Controllers\ContactMessageController::class, 'show'])->name('contact-messages.show');
+        Route::delete('/admin/contact-messages/{message}', [Controllers\ContactMessageController::class, 'destroy'])->name('contact-messages.destroy');
     });
     Route::get('/images/list', [Controllers\PostController::class, 'list'])->name('images.list');
 });

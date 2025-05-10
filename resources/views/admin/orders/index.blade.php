@@ -1,27 +1,23 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Selamat datang di Pesanan, ' . Auth::user()->name . '!') }}
-        </h2>
-    </x-slot>
-    <div class="my-4 h-auto bg-gray-50/50">
-        <div class="p-4 2xl:ml-80">
-            <div class="">
-                <div class="flex justify-between items-center">
-                    <div class="pb-4 bg-gray-50/50 dark:bg-gray-900">
-                        <x-success-notification></x-success-notification>
-                        @include('admin.tour-packages.components.search', [
-                            'label' => 'Search Tour Packages',
-                            'name' => 'tour_package_search',
-                            'placeholder' => 'Cari Pesanan...',
-                            'value' => request()->input('keyword'),
-                        ])
-                    </div>
-                </div>
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg" id="table-tour-package"
-                    name="table-tour-package">
-                </div>
-                <x-footer-dashboard></x-footer-dashboard>
+    <x-admin.header>
+        {{ __('Selamat datang di Pesanan, ' . Auth::user()->name . '!') }}
+    </x-admin.header>
+
+    <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:px-8 space-y-16">
+        {{-- Success Notification --}}
+        @if (session('success'))
+            <div class="px-2">
+                <x-success-notification :message="session('success')" />
             </div>
-        </div>
+        @endif
+
+        {{-- Orders Section --}}
+        <x-admin.section title="Daftar Pesanan">
+            <x-admin.card>
+                <div id="orders-body">
+                    <x-admin.partials.orders-body :orders="$orders" />
+                </div>
+            </x-admin.card>
+        </x-admin.section>
+    </div>
 </x-app-layout>

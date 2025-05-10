@@ -39,10 +39,16 @@
                 </x-nav-link>
             </li>
             <li>
-                {{-- <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')" class="text-white"> --}}
-                <i class="fas fa-shopping-cart mr-2"></i>
-                {{ __('Pesanan') }}
-                {{-- </x-nav-link> --}}
+                <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')" class="text-white">
+                    <i class="fas fa-shopping-cart mr-2"></i>
+                    {{ __('Pesanan') }}
+                </x-nav-link>
+            </li>
+            <li>
+                <x-nav-link :href="route('contact-messages.index')" :active="request()->routeIs('contact-messages.index')" class="text-white">
+                    <i class="fas fa-envelope mr-2"></i>
+                    {{ __('Pesan Masuk') }}
+                </x-nav-link>
             </li>
             <li class="mt-4 pt-4 uppercase text-xs tracking-wider">Akun</li>
             <li>

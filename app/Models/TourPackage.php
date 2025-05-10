@@ -25,4 +25,9 @@ class TourPackage extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(TourPackageImage::class);
+    }
 }

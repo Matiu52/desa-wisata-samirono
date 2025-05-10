@@ -21,6 +21,17 @@
     </div>
 </div>
 
+<!-- Tambah Banyak Gambar -->
+<div class="mb-4">
+    <label for="images" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Gambar Paket (Bisa Lebih dari
+        1)</label>
+    <input type="file" name="images[]" id="images" accept="image/*" multiple
+        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+    @error('images')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+    @enderror
+</div>
+
 
 <div id="dynamic-list-container" class="mb-4">
     <label for="listItem" class="block text-gray-700 font-bold mb-2">

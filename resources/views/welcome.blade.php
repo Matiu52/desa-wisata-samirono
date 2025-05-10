@@ -192,38 +192,10 @@
     <!-- Kunjungan Section -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-6 lg:px-20">
-            <div class="text-left">
+            <div class="text-center">
                 <h2 class="text-4xl font-extrabold text-blue-700 mb-6">Kunjungan ke Desa Wisata Samirono</h2>
                 <x-carousels :carousels="$carousels" />
             </div>
         </div>
     </section>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Ambil semua wrapper carousel
-            const carouselWrappers = document.querySelectorAll(".carousel-wrapper");
-
-            carouselWrappers.forEach((wrapper) => {
-                const carousel = wrapper.querySelector(".carousel");
-                const slides = wrapper.querySelectorAll(".carousel-slide");
-                const totalSlides = slides.length;
-                let currentIndex = 0;
-
-                // Fungsi untuk mengupdate posisi carousel
-                function updateCarousel() {
-                    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-                }
-
-                // Fungsi untuk berpindah ke slide berikutnya
-                function nextSlide() {
-                    currentIndex = (currentIndex + 1) % totalSlides; // Looping ke awal
-                    updateCarousel();
-                }
-
-                // Atur interval untuk masing-masing carousel
-                setInterval(nextSlide, 5000);
-            });
-        });
-    </script>
 </x-user-layout>

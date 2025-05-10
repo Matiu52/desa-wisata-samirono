@@ -35,6 +35,13 @@ class GalleryController extends Controller
         return view('admin.gallery.edit', compact('gallery'));
     }
 
+    public function show($id)
+    { {
+            $carousel = Gallery::with('images')->findOrFail($id);
+            return view('frontend.gallery.detail', compact('carousel'));
+        }
+    }
+
 
     public function update(UpdateGalleryRequest $request, Gallery $gallery, GalleryService $service)
     {
