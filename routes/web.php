@@ -24,6 +24,9 @@ Route::get('/gallery/{id}', [Controllers\GalleryController::class, 'show'])->nam
 //Contact
 Route::resource('contact', Controllers\ContactController::class);
 
+//About
+Route::resource('about', Controllers\AboutController::class);
+
 //Authenticate
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [Controllers\ProfileController::class, 'edit'])->name('profile.edit');

@@ -28,7 +28,7 @@
                         <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">
                             <i class="fas fa-envelope mr-2"></i> Kontak
                         </x-nav-link>
-                        <x-nav-link href="#" :active="request()->routeIs('about')">
+                        <x-nav-link :href="route('about.index')" :active="request()->routeIs('about')">
                             <i class="fas fa-info-circle mr-2"></i> Tentang
                         </x-nav-link>
                     </div>
@@ -131,10 +131,10 @@
                 <x-nav-link :href="route('frontend.tour-packages')" :active="request()->routeIs('frontend.tour-packages')">
                     <i class="fas fa-suitcase mr-3"></i> Paket Wisata
                 </x-nav-link>
-                <x-nav-link :href="'#'" :active="request()->routeIs('contact')">
+                <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact')">
                     <i class="fas fa-envelope mr-3"></i> Kontak
                 </x-nav-link>
-                <x-nav-link :href="'#'" :active="request()->routeIs('about')">
+                <x-nav-link :href="route('about.index')" :active="request()->routeIs('about')">
                     <i class="fas fa-info-circle mr-3"></i> Tentang
                 </x-nav-link>
 
