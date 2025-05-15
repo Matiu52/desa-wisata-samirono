@@ -35,7 +35,29 @@
         </div>
     </section>
 
-    <section class="bg-white space-y-8">
+    <section class="my-10 bg-gradient-to-b from-white via-blue-50 to-white py-12">
+        <div class="max-w-5xl mx-auto px-6">
+            <h2 class="text-3xl font-extrabold text-center text-gray-800 mb-6">
+                🎥 Tonton Video tentang Desa Wisata Samirono
+            </h2>
+
+            <p class="text-center text-gray-600 mb-10 text-lg">
+                Saksikan keindahan alam, budaya lokal, dan keramahan warga di Desa Wisata Samirono melalui video ini.
+            </p>
+
+            <div class="relative w-full overflow-hidden rounded-2xl shadow-2xl ring-1 ring-gray-300 hover:ring-blue-400 transition duration-300 ease-in-out"
+                style="padding-top: 56.25%;">
+                <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/4yuuiNyjra4"
+                    title="Video Desa Wisata Samirono" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="bg-white my-2 space-y-8">
         <!-- Section Atas -->
         @foreach ($homeAtas as $h)
             <div class="section-atas bg-[linear-gradient(to_bottom,white,rgb(239,246,255),white)]">
