@@ -1,6 +1,6 @@
 <x-user-layout>
     <section class="relative bg-cover bg-center bg-no-repeat p-8 h-[40rem]"
-        @if ($backgroundImage->image_path) style="background-image: url('{{ $backgroundImage->image_path }}');" @endif>
+        @if ($backgroundImage && $backgroundImage->image_path) style="background-image: url('{{ $backgroundImage->image_path }}');" @endif>
 
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
