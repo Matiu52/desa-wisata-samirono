@@ -21,7 +21,7 @@
 
 
     {{-- Icon --}}
-    <link rel="icon" type="image/png" href="{{ asset('images/desa-wisata-samirono.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('desa-wisata-samirono.png') }}">
 </head>
 
 <body class="font-sans antialiased">
