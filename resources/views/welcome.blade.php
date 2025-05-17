@@ -193,25 +193,6 @@
         @endforeach
     </section>
 
-    <!-- Pencapaian Section -->
-    <section class="py-16">
-        <div class="container mx-auto px-6 lg:px-20">
-            <div class="text-center">
-                <h2 class="text-4xl font-extrabold text-blue-700 mb-6">Pencapaian Pembangunan Berkelanjutan</h2>
-                <p class="text-lg text-gray-600 mb-6">
-                    <strong>UMKM Desa Wisata Samirono</strong> menawarkan produk seperti Kue Bakpia Berkah, Milky Jong,
-                    Teh Jawa Sangrai, dan masih banyak lagi produk yang bisa dibeli melalui
-                    <a href="https://umkmsamirono.com" target="_blank"
-                        class="text-blue-500 underline hover:text-blue-700">
-                        umkmsamirono.com
-                    </a>.
-                </p>
-                <img src="{{ asset('images/umkm-achievements.jpg') }}" alt="UMKM Achievements"
-                    class="rounded-lg shadow-lg hover:shadow-xl transition-shadow mx-auto">
-            </div>
-        </div>
-    </section>
-
     <!-- Kunjungan Section -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-6 lg:px-20">
