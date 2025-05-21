@@ -21,7 +21,7 @@
                             @foreach ($gallery->images->take(3) as $image)
                                 <img src="{{ asset('images/uploads/' . $image->image_path) }}"
                                     alt="{{ $image->caption }}"
-                                    class="w-1/3 h-24 object-cover rounded border border-gray-200">
+                                    class="w-1/3 h-24 object-cover rounded border border-gray-200" loading="lazy">
                             @endforeach
                         </div>
                     </div>

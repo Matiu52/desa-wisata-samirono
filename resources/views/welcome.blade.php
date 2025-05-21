@@ -10,7 +10,7 @@
             <!-- Gambar -->
             <div class="lg:w-1/2 mt-0 lg:mt-0 flex items-center justify-center">
                 <img src="{{ asset('images/desa-wisata-samirono.png') }}" alt="Desa Wisata Samirono"
-                    class="w-full max-w-24 mx-auto lg:max-w-lg lg:mx-2">
+                    class="w-full max-w-24 mx-auto lg:max-w-lg lg:mx-2" loading="lazy">
             </div>
 
             <!-- Teks -->
@@ -93,7 +93,7 @@
                                     <div class="carousel-slide w-full flex-shrink-0">
                                         <img src="{{ asset('images/uploads/' . trim($image)) }}"
                                             alt="{{ $h->title }}"
-                                            class="w-full h-64 md:h-96 object-cover rounded-lg">
+                                            class="w-full h-64 md:h-96 object-cover rounded-lg" loading="lazy">
                                     </div>
                                 @endforeach
                             </div>
@@ -126,7 +126,7 @@
                                     <div class="carousel-slide w-full flex-shrink-0">
                                         <img src="{{ asset('images/uploads/' . trim($image)) }}"
                                             alt="{{ $h->title }}"
-                                            class="w-full h-64 md:h-96 object-cover rounded-lg">
+                                            class="w-full h-64 md:h-96 object-cover rounded-lg" loading="lazy">
                                     </div>
                                 @endforeach
                             </div>
@@ -182,7 +182,7 @@
                                     <div class="carousel-slide w-full flex-shrink-0">
                                         <img src="{{ asset('images/uploads/' . trim($image)) }}"
                                             alt="{{ $h->title }}"
-                                            class="w-full h-64 md:h-96 object-cover rounded-lg">
+                                            class="w-full h-64 md:h-96 object-cover rounded-lg" loading="lazy">
                                     </div>
                                 @endforeach
                             </div>

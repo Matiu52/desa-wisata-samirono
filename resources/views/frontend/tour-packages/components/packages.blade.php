@@ -25,7 +25,8 @@
                                 x-transition:enter="transition-opacity ease-out duration-500"
                                 x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                                 x-transition:leave="transition-opacity ease-in duration-500"
-                                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+                                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                                loading="lazy">
                         @endforeach
                     </div>
                 @else
@@ -56,7 +57,8 @@
                         <div class="flex gap-2 overflow-x-auto mb-4 justify-center">
                             @foreach ($package->images as $image)
                                 <img src="{{ asset('images/uploads/' . $image->image_path) }}"
-                                    class="w-32 h-32 object-cover rounded-md border" alt="Gambar Tambahan">
+                                    class="w-32 h-32 object-cover rounded-md border" alt="Gambar Tambahan"
+                                    loading="lazy">
                             @endforeach
                         </div>
                     @endif

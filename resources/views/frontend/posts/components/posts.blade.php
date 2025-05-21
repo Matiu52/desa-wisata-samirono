@@ -15,7 +15,7 @@
                 class="bg-white shadow-md rounded-lg overflow-hidden flex flex-col relative hover:shadow-lg transition-shadow duration-300">
                 @if ($post->image)
                     <div class="relative"> <img class="w-full h-48 object-cover" src="{{ $post->image }}"
-                            alt="{{ $post->title }}">
+                            alt="{{ $post->title }}" loading="lazy">
                         <div class="absolute bottom-0 left-0 bg-gray-900 bg-opacity-75 p-2 w-full text-white">
                             <p class="text-sm font-medium"> Oleh
                                 <a href="{{ route('authors.posts.show', urlencode($post->user->name)) }}"
