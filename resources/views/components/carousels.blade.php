@@ -8,7 +8,7 @@
                     <!-- Show first 3 images as a preview -->
                     @if ($carousel->images->count() > 0)
                         @foreach ($carousel->images->take(3) as $image)
-                            <img src="{{ asset('images/uploads/' . $image->image_path) }}" alt="{{ $carousel->title }}"
+                            <img src="{{ $image->image_path }}" alt="{{ $carousel->title }}"
                                 class="w-full h-40 sm:h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                                 loading="lazy">
                         @endforeach

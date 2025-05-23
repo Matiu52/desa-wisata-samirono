@@ -37,10 +37,22 @@
                         <!-- Current Background Preview -->
 
                         @if ($backgroundImage)
+                            @php
+                                $imageUrl = '';
+                                if (isset($backgroundImage->image_path)) {
+                                    if (str_starts_with($backgroundImage->image_path, 'cloudinary|')) {
+                                        $parts = explode('|', $backgroundImage->image_path);
+                                        $imageUrl = $parts[1] ?? '';
+                                    } else {
+                                        $imageUrl = asset($backgroundImage->image_path);
+                                    }
+                                }
+                            @endphp
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Background Saat Ini</label>
                                 <div class="relative">
-                                    <img src="{{ asset($backgroundImage->image_path) }}" alt="Current Background"
+                                    <img src="{{ $imageUrl }}" alt="Current Background"
                                         class="h-32 w-full object-cover rounded-lg shadow" loading="lazy">
                                     <button type="button" onclick="removeBackgroundImage()"
                                         class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600">×</button>

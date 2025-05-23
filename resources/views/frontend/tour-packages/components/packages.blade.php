@@ -20,7 +20,8 @@
                         class="relative w-full h-64 overflow-hidden rounded-lg">
                         @foreach ($package->images as $index => $image)
                             <img x-show="activeIndex === {{ $index }}"
-                                src="{{ asset('images/uploads/' . $image->image_path) }}" alt="Gambar Paket"
+                                src="{{ 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . $image->image_path }}"
+                                alt="Gambar Paket"
                                 class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
                                 x-transition:enter="transition-opacity ease-out duration-500"
                                 x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -56,7 +57,7 @@
                     @if ($package->images->count() > 1)
                         <div class="flex gap-2 overflow-x-auto mb-4 justify-center">
                             @foreach ($package->images as $image)
-                                <img src="{{ asset('images/uploads/' . $image->image_path) }}"
+                                <img src="{{ 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . $image->image_path }}"
                                     class="w-32 h-32 object-cover rounded-md border" alt="Gambar Tambahan"
                                     loading="lazy">
                             @endforeach

@@ -33,10 +33,14 @@ class AdminController extends Controller
         return redirect()->route('dashboard')->with('success', 'Section berhasil ditambahkan.');
     }
 
-    public function edit(HomeSetting $homeSetting)
+    public function edit(HomeSetting $homeSetting, HomeSettingService $service)
     {
+        $imagesFormat = [];
         $images = $homeSetting->images ? explode(',', $homeSetting->images) : [];
-        return view('admin.home.edit', compact('homeSetting', 'images'));
+        foreach ($images as $image) {
+            $imagesFormat[] = $service->getImageUrl($image);
+        }
+        return view('admin.home.edit', compact('homeSetting', 'imagesFormat'));
     }
 
     public function update(HomeSettingRequest $request, HomeSetting $homeSetting)

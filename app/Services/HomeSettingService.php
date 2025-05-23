@@ -4,10 +4,30 @@ namespace App\Services;
 
 use App\Models\HomeSetting;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Cloudinary\Api\Upload\UploadApi;
+use Cloudinary\Configuration\Configuration;
 
 class HomeSettingService
 {
+    protected $uploader;
+
+    public function __construct()
+    {
+        // Setup konfigurasi Cloudinary
+        Configuration::instance([
+            'cloud' => [
+                'cloud_name' => config('cloudinary.cloud_name'),
+                'api_key' => config('cloudinary.api_key'),
+                'api_secret' => config('cloudinary.api_secret')
+            ],
+            'url' => [
+                'secure' => true
+            ]
+        ]);
+
+        $this->uploader = new UploadApi();
+    }
+
     public function getDashboardData(): array
     {
         return [
@@ -24,22 +44,20 @@ class HomeSettingService
 
     public function create(array $data, Request $request): HomeSetting
     {
-        // Tangani upload gambar
-        $images = $this->handleImages($request);
+        $images = $this->handleCloudinaryUploads($request);
 
-        // Buat data baru di database
         return HomeSetting::create([
             'section' => $data['section'],
             'title' => $data['title'],
             'content' => $data['content'],
-            'images' => implode(',', $images), // Gabungkan array gambar menjadi string
+            'images' => implode(',', $images),
         ]);
     }
 
     public function update(HomeSetting $homeSetting, array $data, Request $request): bool
     {
         $oldImages = $homeSetting->images ? explode(',', $homeSetting->images) : [];
-        $newImages = $this->handleImages($request);
+        $newImages = $this->handleCloudinaryUploads($request);
 
         $combinedImages = array_merge($oldImages, $newImages);
 
@@ -51,41 +69,76 @@ class HomeSettingService
         ]);
     }
 
-
-    public function deleteImage(HomeSetting $homeSetting, string $image): bool
+    public function deleteImage(HomeSetting $homeSetting, string $imagePublicId): bool
     {
         $images = explode(',', $homeSetting->images);
-        if (in_array($image, $images)) {
-            Storage::disk('public')->delete($image);
-            $images = array_filter($images, fn($img) => $img !== $image);
-            return $homeSetting->update(['images' => implode(',', $images)]);
+
+        if (in_array($imagePublicId, $images)) {
+            try {
+                // Hapus gambar dari Cloudinary
+                $this->uploader->destroy($imagePublicId);
+
+                // Update daftar gambar di database
+                $images = array_filter($images, fn($img) => $img !== $imagePublicId);
+                return $homeSetting->update(['images' => implode(',', $images)]);
+            } catch (\Exception $e) {
+                report($e);
+                return false;
+            }
         }
+
         return false;
     }
 
     public function delete(HomeSetting $homeSetting): void
     {
         if ($homeSetting->images) {
-            foreach (explode(',', $homeSetting->images) as $image) {
-                Storage::disk('public')->delete($image);
+            foreach (explode(',', $homeSetting->images) as $imagePublicId) {
+                try {
+                    $this->uploader->destroy($imagePublicId);
+                } catch (\Exception $e) {
+                    report($e);
+                    continue;
+                }
             }
         }
 
         $homeSetting->delete();
     }
 
-    private function handleImages(Request $request): array
+    private function handleCloudinaryUploads(Request $request): array
     {
-        $imagePathList = [];
+        $uploadedPublicIds = [];
 
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $key => $image) {
-                $fileName = time() . $key . '.' . $image->getClientOriginalExtension();
-                $imagePath = $image->storeAs('home', $fileName, 'public');
-                $imagePathList[] = $imagePath;
+            foreach ($request->file('images') as $image) {
+                $uploadResult = $this->uploader->upload(
+                    $image->getRealPath(),
+                    [
+                        'folder' => 'desa_wisata_samirono/home_settings',
+                        'resource_type' => 'image',
+                        'transformation' => [
+                            'width' => 1200,
+                            'height' => 800,
+                            'crop' => 'fill',
+                            'quality' => 'auto'
+                        ]
+                    ]
+                );
+
+                $uploadedPublicIds[] = $uploadResult['public_id'];
             }
         }
 
-        return $imagePathList;
+        return $uploadedPublicIds;
+    }
+
+    /**
+     * Generate URL gambar dari public_id
+     */
+    public function getImageUrl(string $publicId): string
+    {
+        return "https://res.cloudinary.com/" . config('cloudinary.cloud_name') .
+            "/image/upload/w_1200,h_800,c_fill,q_auto/" . $publicId;
     }
 }

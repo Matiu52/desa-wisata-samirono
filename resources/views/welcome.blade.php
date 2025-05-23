@@ -1,6 +1,19 @@
 <x-user-layout>
+    @if ($backgroundImage)
+        @php
+            $imageUrl = '';
+            if (isset($backgroundImage->image_path)) {
+                if (str_starts_with($backgroundImage->image_path, 'cloudinary|')) {
+                    $parts = explode('|', $backgroundImage->image_path);
+                    $imageUrl = $parts[1] ?? '';
+                } else {
+                    $imageUrl = asset($backgroundImage->image_path);
+                }
+            }
+        @endphp
+    @endif
     <section class="relative bg-cover bg-center bg-no-repeat p-8 h-[40rem]"
-        @if ($backgroundImage && $backgroundImage->image_path) style="background-image: url('{{ $backgroundImage->image_path }}');" @endif>
+        @if ($backgroundImage && $backgroundImage->image_path) style="background-image: url('{{ $imageUrl }}');" @endif>
 
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -57,7 +70,6 @@
         </div>
     </section>
 
-
     <section class="bg-white my-2 space-y-8">
         <!-- Section Atas -->
         @foreach ($homeAtas as $h)
@@ -87,14 +99,22 @@
                             </p>
                         </div>
                         <!-- Carousel -->
-                        <div class="carousel-wrapper lg:w-1/2 mt-10 lg:mt-0 overflow-hidden relative">
-                            <div class="carousel flex transition-transform ease-in-out">
-                                @foreach (explode(',', $h->images) as $image)
-                                    <div class="carousel-slide w-full flex-shrink-0">
-                                        <img src="{{ asset('images/uploads/' . trim($image)) }}"
+                        <div class="carousel-wrapper lg:w-1/2 mt-10 lg:mt-0 overflow-hidden relative"
+                            data-carousel-id="carousel-{{ $loop->index }}-atas">
+                            <div class="carousel flex transition-transform duration-500 ease-in-out">
+                                @foreach (explode(',', $h->images) as $index => $image)
+                                    <div class="carousel-slide w-full flex-shrink-0" data-index="{{ $index }}">
+                                        <img src="{{ 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . trim($image) }}"
                                             alt="{{ $h->title }}"
                                             class="w-full h-64 md:h-96 object-cover rounded-lg" loading="lazy">
                                     </div>
+                                @endforeach
+                            </div>
+                            <!-- Navigation dots -->
+                            <div class="flex justify-center mt-4 space-x-2">
+                                @foreach (explode(',', $h->images) as $index => $image)
+                                    <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300"
+                                        data-index="{{ $index }}"></button>
                                 @endforeach
                             </div>
                         </div>
@@ -105,7 +125,7 @@
 
         <!-- Section Tengah -->
         @foreach ($homeTengah as $h)
-            <div class="section-atas bg-[linear-gradient(to_bottom,white,rgb(239,246,255),white)]">
+            <div class="section-tengah bg-[linear-gradient(to_bottom,white,rgb(239,246,255),white)]">
                 <div class="container mx-auto px-6 lg:flex lg:items-center lg:space-x-10">
                     @if (!isset($h->images) || empty($h->images))
                         <div class="w-full text-center">
@@ -119,19 +139,6 @@
                             </p>
                         </div>
                     @else
-                        <!-- Carousel -->
-                        <div class="carousel-wrapper lg:w-1/2 mt-10 lg:mt-0 overflow-hidden relative">
-                            <div class="carousel flex transition-transform ease-in-out">
-                                @foreach (explode(',', $h->images) as $image)
-                                    <div class="carousel-slide w-full flex-shrink-0">
-                                        <img src="{{ asset('images/uploads/' . trim($image)) }}"
-                                            alt="{{ $h->title }}"
-                                            class="w-full h-64 md:h-96 object-cover rounded-lg" loading="lazy">
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-
                         <!-- Title dan Content -->
                         <div class="lg:w-1/2 text-center lg:text-center">
                             <h1 class="text-4xl font-extrabold text-blue-700 mb-6">{{ $h->title }}</h1>
@@ -142,6 +149,26 @@
                                     @endif
                                 @endforeach
                             </p>
+                        </div>
+                        <!-- Carousel -->
+                        <div class="carousel-wrapper lg:w-1/2 mt-10 lg:mt-0 overflow-hidden relative"
+                            data-carousel-id="carousel-{{ $loop->index }}-tengah">
+                            <div class="carousel flex transition-transform duration-500 ease-in-out">
+                                @foreach (explode(',', $h->images) as $index => $image)
+                                    <div class="carousel-slide w-full flex-shrink-0" data-index="{{ $index }}">
+                                        <img src="{{ 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . trim($image) }}"
+                                            alt="{{ $h->title }}"
+                                            class="w-full h-64 md:h-96 object-cover rounded-lg" loading="lazy">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <!-- Navigation dots -->
+                            <div class="flex justify-center mt-4 space-x-2">
+                                @foreach (explode(',', $h->images) as $index => $image)
+                                    <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300"
+                                        data-index="{{ $index }}"></button>
+                                @endforeach
+                            </div>
                         </div>
                     @endif
                 </div>
@@ -150,7 +177,7 @@
 
         <!-- Section Bawah -->
         @foreach ($homeBawah as $h)
-            <div class="section-atas bg-[linear-gradient(to_bottom,white,rgb(239,246,255),white)]">
+            <div class="section-bawah bg-[linear-gradient(to_bottom,white,rgb(239,246,255),white)]">
                 <div class="container mx-auto px-6 lg:flex lg:items-center lg:space-x-10">
                     @if (!isset($h->images) || empty($h->images))
                         <div class="w-full text-center">
@@ -176,14 +203,22 @@
                             </p>
                         </div>
                         <!-- Carousel -->
-                        <div class="carousel-wrapper lg:w-1/2 mt-10 lg:mt-0 overflow-hidden relative">
-                            <div class="carousel flex transition-transform ease-in-out">
-                                @foreach (explode(',', $h->images) as $image)
-                                    <div class="carousel-slide w-full flex-shrink-0">
-                                        <img src="{{ asset('images/uploads/' . trim($image)) }}"
+                        <div class="carousel-wrapper lg:w-1/2 mt-10 lg:mt-0 overflow-hidden relative"
+                            data-carousel-id="carousel-{{ $loop->index }}-bawah">
+                            <div class="carousel flex transition-transform duration-500 ease-in-out">
+                                @foreach (explode(',', $h->images) as $index => $image)
+                                    <div class="carousel-slide w-full flex-shrink-0" data-index="{{ $index }}">
+                                        <img src="{{ 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . trim($image) }}"
                                             alt="{{ $h->title }}"
                                             class="w-full h-64 md:h-96 object-cover rounded-lg" loading="lazy">
                                     </div>
+                                @endforeach
+                            </div>
+                            <!-- Navigation dots -->
+                            <div class="flex justify-center mt-4 space-x-2">
+                                @foreach (explode(',', $h->images) as $index => $image)
+                                    <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300"
+                                        data-index="{{ $index }}"></button>
                                 @endforeach
                             </div>
                         </div>
@@ -203,3 +238,74 @@
         </div>
     </section>
 </x-user-layout>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize all carousels on the page
+        const carouselWrappers = document.querySelectorAll('.carousel-wrapper');
+
+        carouselWrappers.forEach(wrapper => {
+            const carouselId = wrapper.getAttribute('data-carousel-id');
+            const carousel = wrapper.querySelector('.carousel');
+            const slides = wrapper.querySelectorAll('.carousel-slide');
+            const dots = wrapper.querySelectorAll('.carousel-dot');
+            let currentIndex = 0;
+            const slideCount = slides.length;
+            const slideWidth = 100; // 100% width per slide
+
+            // Set initial position
+            carousel.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+
+            // Auto-rotate every 5 seconds
+            let interval = setInterval(() => nextSlide(carouselId), 5000);
+
+            // Store interval reference for this carousel
+            wrapper.setAttribute('data-interval', interval);
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slideCount;
+                updateCarousel();
+            }
+
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+
+                // Update active dot
+                dots.forEach((dot, index) => {
+                    if (index === currentIndex) {
+                        dot.classList.add('bg-blue-600');
+                        dot.classList.remove('bg-gray-300');
+                    } else {
+                        dot.classList.remove('bg-blue-600');
+                        dot.classList.add('bg-gray-300');
+                    }
+                });
+
+                // Reset the interval
+                clearInterval(interval);
+                interval = setInterval(() => nextSlide(carouselId), 5000);
+                wrapper.setAttribute('data-interval', interval);
+            }
+
+            // Add click handlers for dots
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    currentIndex = parseInt(this.getAttribute('data-index'));
+                    updateCarousel();
+                });
+            });
+
+            // Pause on hover
+            wrapper.addEventListener('mouseenter', () => {
+                clearInterval(interval);
+            });
+
+            wrapper.addEventListener('mouseleave', () => {
+                clearInterval(interval);
+                interval = setInterval(() => nextSlide(carouselId), 5000);
+                wrapper.setAttribute('data-interval', interval);
+            });
+        });
+    });
+</script>

@@ -47,6 +47,19 @@
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-6">
                 <h2 class="text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">Deskripsi</h2>
                 <p class="text-gray-800 dark:text-gray-200 text-justify">{{ $tourPackage->description }}</p>
+                @if ($tourPackage->images)
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                        @foreach ($tourPackage->images as $index => $image)
+                            <div class="overflow-hidden rounded-lg shadow">
+                                <img src="{{ 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . trim($image->image_path) }}"
+                                    alt="Gambar Paket Wisata"
+                                    class="w-full h-48 object-cover hover:scale-105 transition duration-300">
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p class="text-gray-500 dark:text-gray-400">Tidak ada gambar tersedia</p>
+                @endif
             </div>
 
             {{-- Tombol Aksi --}}

@@ -22,8 +22,8 @@
                 @foreach ($carousel->images as $index => $image)
                     <div class="cursor-pointer transform hover:scale-105 transition-transform duration-200 rounded-lg overflow-hidden"
                         onclick="openLightbox({{ $index }})">
-                        <img src="{{ asset('images/uploads/' . $image->image_path) }}" alt="{{ $carousel->title }}"
-                            class="w-full h-48 object-cover" loading="lazy">
+                        <img src="{{ 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . $image->image_path }}"
+                            alt="{{ $carousel->title }}" class="w-full h-48 object-cover" loading="lazy">
                     </div>
                 @endforeach
             </div>
@@ -81,7 +81,7 @@
             const lightboxImg = document.getElementById('lightbox-image');
             const lightboxCounter = document.getElementById('lightbox-counter');
 
-            lightboxImg.src = '{{ asset('images/uploads/') }}/' + image.image_path;
+            lightboxImg.src = 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' + image.image_path;
             lightboxImg.alt = '{{ $carousel->title }}';
             lightboxCounter.textContent = `${currentImageIndex + 1} / ${carouselImages.length}`;
         }

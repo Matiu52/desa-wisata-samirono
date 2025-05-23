@@ -54,8 +54,7 @@
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                             @foreach ($gallery->images as $image)
                                 <div class="relative border p-2 rounded-lg shadow-md bg-gray-50 dark:bg-gray-700">
-                                    <img src="{{ asset('images/uploads/' . $image->image_path) }}"
-                                        class="w-full h-auto rounded-md">
+                                    <img src="{{ $image->image_path }}" class="w-full h-auto rounded-md">
                                     <p class="text-sm mt-2 text-gray-700 dark:text-gray-300">
                                         {{ $image->caption ?? 'Tanpa keterangan' }}
                                     </p>

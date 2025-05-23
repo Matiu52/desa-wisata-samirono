@@ -16,13 +16,13 @@
                 <x-success-notification></x-success-notification>
 
                 {{-- Gambar Saat Ini --}}
-                @if ($images)
+                @if ($imagesFormat)
                     <div class="mt-6">
                         <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Gambar Saat Ini:</p>
                         <div class="flex flex-wrap gap-4 mt-4">
-                            @foreach ($images as $image)
+                            @foreach ($imagesFormat as $image)
                                 <div class="relative w-24 h-24">
-                                    <img src="{{ asset('images/uploads/' . $image) }}" alt="Image"
+                                    <img src=" {{ $image }}" alt="Image"
                                         class="w-full h-full object-cover rounded-md shadow-md">
                                     <form action="{{ route('home-settings.delete-image', $homeSetting) }}"
                                         method="POST" class="absolute top-1 right-1">
