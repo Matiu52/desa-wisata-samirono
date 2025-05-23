@@ -33,9 +33,11 @@ class GalleryService
         return [
             'galleries' => Gallery::select('id', 'title', 'description', 'created_at')
                 ->with('images:id,gallery_id,image_path,public_id')
+                ->orderByDesc('created_at') // Urutkan dari yang terbaru
                 ->get(),
         ];
     }
+
 
     public function storeWithImages(array $data): Gallery
     {
