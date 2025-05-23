@@ -81,8 +81,7 @@
             const lightboxImg = document.getElementById('lightbox-image');
             const lightboxCounter = document.getElementById('lightbox-counter');
 
-            lightboxImg.src = 'https://res.cloudinary.com/'.config('cloudinary.cloud_name').
-            '/image/upload/' + image.image_path;
+            lightboxImg.src = image.image_path;
             lightboxImg.alt = '{{ $carousel->title }}';
             lightboxCounter.textContent = `${currentImageIndex + 1} / ${carouselImages.length}`;
         }
