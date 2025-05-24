@@ -23,7 +23,7 @@
             <!-- Gambar -->
             <div class="lg:w-1/2 mt-0 lg:mt-0 flex items-center justify-center">
                 <img src="{{ asset('images/desa-wisata-samirono.png') }}" alt="Desa Wisata Samirono"
-                    class="w-full max-w-24 mx-auto lg:max-w-lg lg:mx-2" loading="lazy">
+                    class="w-full max-w-24 mx-auto lg:max-w-lg lg:mx-2">
             </div>
 
             <!-- Teks -->
@@ -106,7 +106,7 @@
                                     <div class="carousel-slide w-full flex-shrink-0" data-index="{{ $index }}">
                                         <img src="{{ 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . trim($image) }}"
                                             alt="{{ $h->title }}"
-                                            class="w-full h-64 md:h-96 object-cover rounded-lg" loading="lazy">
+                                            class="w-full h-64 md:h-96 object-cover rounded-lg">
                                     </div>
                                 @endforeach
                             </div>
