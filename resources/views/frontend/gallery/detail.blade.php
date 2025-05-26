@@ -23,7 +23,7 @@
                     <div class="cursor-pointer transform hover:scale-105 transition-transform duration-200 rounded-lg overflow-hidden"
                         onclick="openLightbox({{ $index }})">
                         <img src="{{ $image->image_path }}" alt="{{ $carousel->title }}"
-                            class="w-full h-48 object-cover" loading="lazy">
+                            class="w-full h-48 object-cover">
                     </div>
                 @endforeach
             </div>

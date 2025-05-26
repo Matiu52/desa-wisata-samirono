@@ -158,7 +158,7 @@
                                     <div class="carousel-slide w-full flex-shrink-0" data-index="{{ $index }}">
                                         <img src="{{ 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . trim($image) }}"
                                             alt="{{ $h->title }}"
-                                            class="w-full h-64 md:h-96 object-cover rounded-lg" loading="lazy">
+                                            class="w-full h-64 md:h-96 object-cover rounded-lg">
                                     </div>
                                 @endforeach
                             </div>
@@ -210,7 +210,7 @@
                                     <div class="carousel-slide w-full flex-shrink-0" data-index="{{ $index }}">
                                         <img src="{{ 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . trim($image) }}"
                                             alt="{{ $h->title }}"
-                                            class="w-full h-64 md:h-96 object-cover rounded-lg" loading="lazy">
+                                            class="w-full h-64 md:h-96 object-cover rounded-lg">
                                     </div>
                                 @endforeach
                             </div>
