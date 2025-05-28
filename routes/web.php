@@ -72,6 +72,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/tour-packages/{tourPackage:slug}/edit', [Controllers\TourPackageController::class, 'edit'])->name('tour-packages.edit');
         Route::get('/tour-packages/{tourPackage:slug}', [Controllers\TourPackageController::class, 'show'])->name('tour-packages.show');
         Route::delete('/tour-packages/{tourPackage:slug}/delete', [Controllers\TourPackageController::class, 'destroy'])->name('tour-packages.destroy');
+        Route::delete('/tour-packages/images/{image}', [Controllers\TourPackageController::class, 'destroyImage'])->name('tour-packages.images.destroy');
+
 
         Route::resource('orders', Controllers\OrderController::class);
 

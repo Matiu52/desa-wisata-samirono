@@ -31,7 +31,7 @@
                         @endforeach
                     </div>
                 @else
-                    <img src="{{ asset('images/no-image.png') }}" alt="No Image"
+                    <img src="{{ asset('images/no-image.jpg') }}" alt="No Image"
                         class="w-full h-64 object-cover rounded-lg">
                 @endif
 
@@ -58,8 +58,7 @@
                         <div class="flex gap-2 overflow-x-auto mb-4 justify-center">
                             @foreach ($package->images as $image)
                                 <img src="{{ 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . $image->image_path }}"
-                                    class="w-32 h-32 object-cover rounded-md border" alt="Gambar Tambahan"
-                                    loading="lazy">
+                                    class="w-32 h-32 object-cover rounded-md border" alt="Gambar Tambahan">
                             @endforeach
                         </div>
                     @endif

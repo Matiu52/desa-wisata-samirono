@@ -80,6 +80,15 @@
                         <a href="{{ route('tour-packages.show', $tourPackage->slug) }}"
                             class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Lihat
                         </a>
+                        <form action="{{ route('tour-packages.destroy', $tourPackage->slug) }}" method="POST"
+                            onsubmit="return confirm('Yakin ingin menghapus paket ini?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs">
+                                Hapus
+                            </button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

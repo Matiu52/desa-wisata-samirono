@@ -144,7 +144,7 @@ class TourPackageController extends Controller
 
     public function edit(TourPackage $tourPackage)
     {
-        $tourPackage = TourPackage::where('slug', $tourPackage->slug)->firstOrFail();
+        $tourPackage = TourPackage::with('images')->where('slug', $tourPackage->slug)->firstOrFail();
         return view('admin.tour-packages.edit', compact('tourPackage'));
     }
 
@@ -155,9 +155,11 @@ class TourPackageController extends Controller
             'duration' => 'required',
             'price' => 'required|numeric',
             'description' => 'nullable',
-            'new_images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'listItems' => 'required|array',
             'listItems.*' => 'nullable|string',
+            'delete_images' => 'nullable|array',
+            'delete_images.*' => 'integer|exists:tour_package_images,id',
         ]);
 
         DB::beginTransaction();
@@ -171,9 +173,24 @@ class TourPackageController extends Controller
                 'slug' => Str::slug($request->packageName),
             ]);
 
-            // Tambah gambar baru
-            if ($request->hasFile('new_images')) {
-                foreach ($request->file('new_images') as $image) {
+            // Hapus gambar yang diceklis
+            if ($request->has('delete_images')) {
+                $imagesToDelete = $request->delete_images;
+                foreach ($imagesToDelete as $imageId) {
+                    $image = $tourPackage->images()->find($imageId);
+                    if ($image) {
+                        // Hapus file di Cloudinary (contoh)
+                        $this->uploader->destroy($image->image_path);
+
+                        // Hapus data di DB
+                        $image->delete();
+                    }
+                }
+            }
+
+            // Tambah gambar baru jika ada
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
                     $uploadResult = $this->uploader->upload(
                         $image->getRealPath(),
                         [
@@ -196,6 +213,7 @@ class TourPackageController extends Controller
                 }
             }
 
+            // Update listItems
             $tourPackage->listItems()->delete();
             foreach ($request->listItems as $item) {
                 if (!empty($item)) {
@@ -211,6 +229,7 @@ class TourPackageController extends Controller
             return back()->with('error', 'Gagal mengupdate paket wisata: ' . $e->getMessage());
         }
     }
+
 
     public function destroyImage(TourPackageImage $image)
     {

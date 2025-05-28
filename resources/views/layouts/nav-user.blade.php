@@ -4,7 +4,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo dan Nama (Paling Kiri) -->
-                <div class="flex items-center">
+                <div class="flex items-center shrink-0">
                     <a href="{{ route('homepage') }}" class="flex items-center space-x-2">
                         <x-application-logo class="h-10 w-10 text-gray-800 dark:text-gray-200" />
                         <span class="text-xl font-semibold text-gray-800 dark:text-gray-200 hidden sm:block">
@@ -13,35 +13,34 @@
                     </a>
                 </div>
 
-                <!-- Menu Tengah (Desktop) -->
-                <div class="hidden md:flex md:items-center md:justify-center md:flex-1 md:px-8">
-                    <div class="flex space-x-8">
-                        <x-nav-link :href="route('homepage')" :active="request()->routeIs('homepage')">
+                <!-- Menu Tengah (Desktop) - Perbaikan utama di sini -->
+                <div class="hidden md:flex md:items-center md:flex-1 md:justify-center md:px-2 lg:px-4">
+                    <div class="flex space-x-4 lg:space-x-6 whitespace-nowrap">
+                        <x-nav-link :href="route('homepage')" :active="request()->routeIs('homepage')" class="px-2">
                             <i class="fas fa-home mr-2"></i> Beranda
                         </x-nav-link>
-                        <x-nav-link :href="route('frontend.posts')" :active="request()->routeIs('frontend.posts')">
+                        <x-nav-link :href="route('frontend.posts')" :active="request()->routeIs('frontend.posts')" class="px-2">
                             <i class="fas fa-newspaper mr-2"></i> Artikel
                         </x-nav-link>
-                        <x-nav-link :href="route('frontend.tour-packages')" :active="request()->routeIs('frontend.tour-packages')">
+                        <x-nav-link :href="route('frontend.tour-packages')" :active="request()->routeIs('frontend.tour-packages')" class="px-2">
                             <i class="fas fa-suitcase mr-2"></i> Paket Wisata
                         </x-nav-link>
-                        <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">
+                        <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')" class="px-2">
                             <i class="fas fa-envelope mr-2"></i> Kontak
                         </x-nav-link>
-                        <x-nav-link :href="route('about.index')" :active="request()->routeIs('about')">
+                        <x-nav-link :href="route('about.index')" :active="request()->routeIs('about')" class="px-2">
                             <i class="fas fa-info-circle mr-2"></i> Tentang
                         </x-nav-link>
                     </div>
                 </div>
 
                 <!-- User Authentication (Paling Kanan) -->
-                <div class="flex items-center">
-                    <div class="hidden md:flex items-center space-x-4">
+                <div class="flex items-center ml-2">
+                    <div class="hidden md:flex items-center space-x-2 lg:space-x-4">
                         @auth
-                            <!-- Menu Admin (hanya tampil untuk admin) -->
                             @if (Auth::user()->role->name === 'admin')
                                 <x-nav-link :href="route('dashboard')"
-                                    class="px-3 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">
+                                    class="px-3 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 text-sm">
                                     <i class="fas fa-shield-alt mr-2"></i> Admin
                                 </x-nav-link>
                             @endif
@@ -79,24 +78,24 @@
                             </x-dropdown>
                         @else
                             <x-nav-link :href="route('login')"
-                                class="px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                                class="px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm">
                                 <i class="fas fa-sign-in-alt mr-2"></i> Masuk
                             </x-nav-link>
                             @if (Route::has('register'))
                                 <x-nav-link :href="route('register')"
-                                    class="px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                                    class="px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm">
                                     <i class="fas fa-user-plus mr-2"></i> Daftar
                                 </x-nav-link>
                             @endif
                             <x-nav-link :href="route('admin.login')"
-                                class="px-3 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 hover:text-white">
+                                class="px-3 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 hover:text-white text-sm">
                                 <i class="fas fa-shield-alt mr-2"></i> Admin
                             </x-nav-link>
                         @endauth
                     </div>
 
                     <!-- Mobile menu button -->
-                    <div class="md:hidden ml-4">
+                    <div class="md:hidden ml-2">
                         <button @click="open = !open"
                             class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
                             <svg class="h-6 w-6" :class="{ 'hidden': open, 'block': !open }" stroke="currentColor"
