@@ -15,34 +15,32 @@
             <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
                 <x-success-notification></x-success-notification>
 
-                {{-- Gambar Saat Ini --}}
-                {{-- Gambar Saat Ini dengan checkbox hapus --}}
-                @if ($imagesFormat)
-                    <div class="mt-6">
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Gambar Saat Ini:</p>
-                        <div class="flex flex-wrap gap-4 mt-4">
-                            @foreach ($imagesFormat as $image)
-                                <div class="relative w-24 h-24">
-                                    <img src="{{ $image }}" alt="Image"
-                                        class="w-full h-full object-cover rounded-md shadow-md">
-                                    <label
-                                        class="absolute top-1 left-1 bg-white bg-opacity-70 rounded px-1 text-xs flex items-center cursor-pointer">
-                                        <input type="checkbox" name="delete_images[]" value="{{ $image }}"
-                                            class="mr-1">
-                                        Hapus
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
-
 
                 {{-- Form Edit Section --}}
                 <form action="{{ route('home-settings.update', $homeSetting) }}" method="POST"
                     enctype="multipart/form-data" class="mt-8">
                     @csrf
                     @method('PUT')
+                    {{-- Gambar Saat Ini dengan checkbox hapus --}}
+                    @if ($imagesFormat)
+                        <div class="mt-6">
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Gambar Saat Ini:</p>
+                            <div class="flex flex-wrap gap-4 mt-4">
+                                @foreach ($imagesFormat as $image)
+                                    <div class="relative w-24 h-24">
+                                        <img src="{{ $image }}" alt="Image"
+                                            class="w-full h-full object-cover rounded-md shadow-md">
+                                        <label
+                                            class="absolute top-1 left-1 bg-white bg-opacity-70 rounded px-1 text-xs flex items-center cursor-pointer">
+                                            <input type="checkbox" name="delete_images[]" value="{{ $image }}"
+                                                class="mr-1">
+                                            Hapus
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
 
                     {{-- Pilihan Nama Section --}}
                     <div class="mb-6">
