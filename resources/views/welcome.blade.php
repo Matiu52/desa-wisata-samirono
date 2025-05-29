@@ -70,7 +70,7 @@
         </div>
     </section>
 
-    <section class="bg-white my-2 space-y-8">
+    <section class="bg-white my-2 space-y-8 py-4">
         <!-- Section Atas -->
         @foreach ($homeAtas as $h)
             <div class="section-atas bg-[linear-gradient(to_bottom,white,rgb(239,246,255),white)]">
