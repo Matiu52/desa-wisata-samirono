@@ -54,33 +54,62 @@ class HomeSettingService
         ]);
     }
 
+
+    private function extractPublicIdFromUrl(string $url): string
+    {
+        $parts = explode('/upload/', $url);
+        if (count($parts) < 2) {
+            return '';
+        }
+
+        $path = $parts[1];
+
+        $folder = 'desa_wisata_samirono';
+
+        $pos = strpos($path, $folder);
+
+        if ($pos === false) {
+            return '';
+        }
+
+        // Ambil substring mulai dari folder
+        $publicIdWithPossibleExt = substr($path, $pos);
+
+        // Hilangkan ekstensi file jika ada (.jpg, .png, dll)
+        $publicId = preg_replace('/\.\w+$/', '', $publicIdWithPossibleExt);
+
+        return $publicId;
+    }
+
+
+
     public function update(HomeSetting $homeSetting, array $data, Request $request): bool
     {
         $oldImages = $homeSetting->images ? explode(',', $homeSetting->images) : [];
+        $deleteImagesUrls = $request->input('delete_images', []);
 
-        // Ambil daftar gambar yang dipilih untuk dihapus dari request
-        $imagesToDelete = $request->input('delete_images', []);
+        // Ekstrak public_id dari URL
+        $deleteImagesPublicIds = array_map(function ($url) {
+            return $this->extractPublicIdFromUrl($url);
+        }, $deleteImagesUrls);
 
-        // Filter gambar yang tidak dihapus (yang tersisa)
-        $remainingImages = array_filter($oldImages, fn($img) => !in_array($img, $imagesToDelete));
+        // Sisakan gambar yang tidak dihapus
+        $remainingImages = array_filter($oldImages, fn($img) => !in_array($img, $deleteImagesPublicIds));
 
-        // Hapus gambar dari Cloudinary yang dipilih untuk dihapus
-        foreach ($imagesToDelete as $publicId) {
-            try {
-                $this->uploader->destroy($publicId);
-            } catch (\Exception $e) {
-                report($e);
-                // lanjutkan meskipun ada error saat menghapus satu gambar
+        // Hapus gambar dari Cloudinary
+        foreach ($deleteImagesPublicIds as $publicId) {
+            if ($publicId) {
+                try {
+                    $this->uploader->destroy($publicId);
+                } catch (\Exception $e) {
+                    report($e);
+                }
             }
         }
 
-        // Upload gambar baru yang dikirim pada request
         $newImages = $this->handleCloudinaryUploads($request);
-
-        // Gabungkan gambar tersisa dan yang baru diupload
         $combinedImages = array_merge($remainingImages, $newImages);
 
-        // Update data di database
         return $homeSetting->update([
             'section' => $data['section'],
             'title' => $data['title'],
@@ -88,7 +117,6 @@ class HomeSettingService
             'images' => implode(',', $combinedImages),
         ]);
     }
-
 
     public function deleteImage(HomeSetting $homeSetting, string $imagePublicId): bool
     {

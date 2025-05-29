@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('home_settings', function (Blueprint $table) {
-            $table->string('images')->nullable()->after('content'); //
+            $table->text('images')->nullable()->after('content'); //
         });
     }
 
