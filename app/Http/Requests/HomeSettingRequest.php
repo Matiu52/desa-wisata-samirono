@@ -24,7 +24,7 @@ class HomeSettingRequest extends FormRequest
             'section' => 'required|string|max:255',
             'title' => 'nullable|string|max:255',
             'content' => 'nullable|string',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
         ];
     }
 
