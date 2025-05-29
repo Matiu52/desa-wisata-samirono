@@ -57,10 +57,30 @@ class HomeSettingService
     public function update(HomeSetting $homeSetting, array $data, Request $request): bool
     {
         $oldImages = $homeSetting->images ? explode(',', $homeSetting->images) : [];
+
+        // Ambil daftar gambar yang dipilih untuk dihapus dari request
+        $imagesToDelete = $request->input('delete_images', []);
+
+        // Filter gambar yang tidak dihapus (yang tersisa)
+        $remainingImages = array_filter($oldImages, fn($img) => !in_array($img, $imagesToDelete));
+
+        // Hapus gambar dari Cloudinary yang dipilih untuk dihapus
+        foreach ($imagesToDelete as $publicId) {
+            try {
+                $this->uploader->destroy($publicId);
+            } catch (\Exception $e) {
+                report($e);
+                // lanjutkan meskipun ada error saat menghapus satu gambar
+            }
+        }
+
+        // Upload gambar baru yang dikirim pada request
         $newImages = $this->handleCloudinaryUploads($request);
 
-        $combinedImages = array_merge($oldImages, $newImages);
+        // Gabungkan gambar tersisa dan yang baru diupload
+        $combinedImages = array_merge($remainingImages, $newImages);
 
+        // Update data di database
         return $homeSetting->update([
             'section' => $data['section'],
             'title' => $data['title'],
@@ -68,6 +88,7 @@ class HomeSettingService
             'images' => implode(',', $combinedImages),
         ]);
     }
+
 
     public function deleteImage(HomeSetting $homeSetting, string $imagePublicId): bool
     {

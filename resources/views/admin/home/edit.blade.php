@@ -16,29 +16,27 @@
                 <x-success-notification></x-success-notification>
 
                 {{-- Gambar Saat Ini --}}
+                {{-- Gambar Saat Ini dengan checkbox hapus --}}
                 @if ($imagesFormat)
                     <div class="mt-6">
                         <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Gambar Saat Ini:</p>
                         <div class="flex flex-wrap gap-4 mt-4">
                             @foreach ($imagesFormat as $image)
                                 <div class="relative w-24 h-24">
-                                    <img src=" {{ $image }}" alt="Image"
+                                    <img src="{{ $image }}" alt="Image"
                                         class="w-full h-full object-cover rounded-md shadow-md">
-                                    <form action="{{ route('home-settings.delete-image', $homeSetting) }}"
-                                        method="POST" class="absolute top-1 right-1">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="hidden" name="image" value="{{ $image }}">
-                                        <button type="submit"
-                                            class="bg-red-500 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center shadow-md hover:bg-red-600 focus:outline-none">
-                                            &times;
-                                        </button>
-                                    </form>
+                                    <label
+                                        class="absolute top-1 left-1 bg-white bg-opacity-70 rounded px-1 text-xs flex items-center cursor-pointer">
+                                        <input type="checkbox" name="delete_images[]" value="{{ $image }}"
+                                            class="mr-1">
+                                        Hapus
+                                    </label>
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 @endif
+
 
                 {{-- Form Edit Section --}}
                 <form action="{{ route('home-settings.update', $homeSetting) }}" method="POST"
